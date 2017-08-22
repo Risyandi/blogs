@@ -6,8 +6,8 @@ subtitle: Learnings, Ramblings and Rants. In that order.
 email: nikitaraghunath@gmail.com
 description: >
   A personal website about technical things I find useful. Also, random ramblings and rants.
-baseurl: ""
-url: "https://risyandi.github.io/blogs"
+baseurl: "/blogs/"
+url: "https://risyandi.github.io/"
 twitter_username: TheNikhita
 github_username:  nikhita
 disqus_baseurl: "https://nikhita.github.io/"
