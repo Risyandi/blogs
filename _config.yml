@@ -10,8 +10,8 @@ baseurl: "/blogs"
 url: "https://risyandi.github.io"
 twitter_username: Risyandi94
 github_username:  Risyandi
-disqus_baseurl: "https://nikhita.github.io/"
-disqus_shortname: https-nikinath-github-io
+disqus_baseurl: "https://risyandi.com/"
+disqus_shortname: risyandi
 permalink: :title
 cover: "/assets/header_image.jpg"
 logo: "/assets/nr-logo.jpg"
