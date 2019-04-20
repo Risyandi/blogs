@@ -2,10 +2,10 @@
 # Site settings
 title: Risyandi
 name: Risyandi
-subtitle: Learnings, Ramblings and Rants. In that order.
+subtitle: a minimalist personal, continuously learn and explorer.
 email: Risyandi.94@gmail.com
-description: >
-  A personal website about technical things I find useful. Also, random ramblings and rants.
+description: >  
+  A personal blogs I write about technical things, Advertising Technologies, Data Scientist, Design, and Ecosystem Digital Startup in Indonesia.
 baseurl: "/blogs"
 url: "https://risyandi.github.io"
 twitter_username: Risyandi94
@@ -14,6 +14,7 @@ disqus_baseurl: "https://risyandi.com/"
 disqus_shortname: risyandi
 permalink: :title
 cover: "/assets/header_image.jpg"
+cover_logo: "/assets/header_image_logo.png"
 logo: "/assets/nr-logo.jpg"
 ga_tracking_id: "UA-82647777-1"
 
@@ -89,13 +90,6 @@ social:
     desc: Connect with me on LinkedIn
     share: true
 
-  - name: Google+
-    icon: google-plus
-    username:
-    url:
-    desc: Add me to your Circles
-    share: true
-
   - name: YouTube
     icon: youtube
     username:
@@ -115,7 +109,7 @@ social:
     username:
     url:
     desc: Follow me on Pinterest
-    share: true
+    share: false
 
   - name: SoundCloud
     icon: soundcloud
@@ -164,7 +158,7 @@ social:
     username:
     url:
     desc: Share to Reddit
-    share: true
+    share: false
 
   - name: "Hacker News"
     icon: hacker-news
@@ -184,6 +178,6 @@ protocols:
 
     twitter_image: "/assets/nr-logo.jpg"
 
-    os_repo: "https://github.com/nikhita/nikhita.github.io"
+    os_repo: "https://github.com/Risyandi/blogs"
     os_rcs_type: "git"
-    os_src: "git@github.com:nikhita.github.io.git"
+    os_src: "git@github.com:Risyandi/blogs.git"
