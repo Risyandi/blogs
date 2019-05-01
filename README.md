@@ -1,3 +1,3 @@
-## Source code of my blog
+## Blogs
 
-The site is available at - https://risyandi.github.io/blogs. It has been hosted using Github pages.
+The sites is available on link https://risyandi.com/blogs. the sites powered and hosted by Github pages.
