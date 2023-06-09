@@ -1,6 +1,6 @@
 ---
 layout: page
-title: About Me
+title: About
 description: Risyandi an minimalist personal, tech enthusiast, and a digital nomads from indonesia
 permalink: /about/
 ---
