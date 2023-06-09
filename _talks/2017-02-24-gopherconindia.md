@@ -1,12 +1,12 @@
 ---
-title: "The Story of $GOPATH"
-subtitle: "Problems and Proposals about GOPATH"
-event: "GopherConIndia 2017"
-event-fulltitle:
-event-url: "http://www.gophercon.in/"
-location: "Pune, India"
-slides: "https://speakerdeck.com/nikhita/the-story-of-gopath"
-video: "https://youtu.be/1BAIOUON2Uo?t=16m50s"
-post: "experience-gophercon-india"
-news: "https://golangnews.com/stories/1868-slides-the-story-of-gopath-by-nikhita-raghunath"
+# title: "Title of talks"
+# subtitle: "Subtitle of talks"
+# event: "name event"
+# event-full-title: "name event full"
+# event-url: "event url"
+# location: "location"
+# slides: "url slide presentation"
+# video: "url youtube video"
+# post: "name post"
+# news: "url news external or internal"
 ---

@@ -4,10 +4,10 @@ title: Talks
 permalink: /talks/
 ---
 <br>
-A list of talks that I have presented at various conferences. 
+A list of talks that I have presented at various conferences.
 I have just started with tech speaking but when I was on stage, I realized it was extremely **FUN** and that I want to do more of this!
 
-<div>
+<!-- <div>
 {% for talks in site.talks reversed %}
   {% if talks.date > site.time %}
     {% if forloop.first %}
@@ -20,7 +20,6 @@ I have just started with tech speaking but when I was on stage, I realized it wa
       {% assign previousyear = currentyear %}
     {% endif %}
   {% endif %}
-
 
     <div class="talks">
       <span class="post-title"><strong><big> {{ talks.title }} - </big></strong></span>
@@ -80,5 +79,4 @@ I have just started with tech speaking but when I was on stage, I realized it wa
       {% endif %}
     </div>
 {% endfor %}
-</div>
-
+</div> -->
