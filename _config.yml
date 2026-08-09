@@ -20,6 +20,14 @@ ga_tracking_id: "UA-82647777-1"
 
 # Build settings
 markdown: kramdown
+# ponytail: vendored bourbon/neat use legacy Sass syntax; silence until they're replaced
+sass:
+  silence_deprecations:
+    - import
+    - slash-div
+    - global-builtin
+    - if-function
+    - color-functions
 paginate: 5
 paginate_path: "/page:num/"
 inter_post_navigation: true
@@ -33,14 +41,19 @@ defaults:
 
 
 # External gems
-gems:
+plugins:
   - jekyll-sitemap
   - jekyll-paginate
   - jemoji
   - jekyll-seo-tag
 
 exclude:
-  - "/vendor/"
+  - Gemfile
+  - Gemfile.lock
+  - vendor
+  - .github
+  - LICENSE
+  - README.md
 
 # Collections
 collections:
