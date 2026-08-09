@@ -15,7 +15,7 @@ disqus_shortname: risyandi
 permalink: :title
 cover: "/assets/header_image.jpg"
 cover_logo: "/assets/header_image_logo.png"
-logo: "/assets/nr-logo.jpg"
+logo: "/assets/icons/logo.png"
 ga_tracking_id: "UA-82647777-1"
 
 # Build settings
