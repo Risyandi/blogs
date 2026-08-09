@@ -261,10 +261,26 @@ pre code.hljs {
 	.site-header-container {
 		color: $white;
 		text-shadow: 0 2px 1px rgba(0,0,0,0.33);
-		background-color: $highlight-color;
+		background-color: $dark-gray;
+		max-width: $max-width;
+		margin: 1em;
+		border-radius: 8px;
+		overflow: hidden;
+		@include media($tablet) {
+			margin: 1em auto;
+		}
+		.scrim.has-cover {
+			background: linear-gradient(rgba(34, 39, 42, 0.45), rgba(34, 39, 42, 0.75));
+			padding: 3em 1em !important;
+			@include media($tablet) {
+				padding: 4em 1em !important;
+			}
+		}
 		.site-header{
 			.title {
-				font-size: modular-scale(6);
+				font-size: modular-scale(5);
+				font-weight: bold;
+				color: $white;
 			}
 			.subtitle {
 				font-style: italic;
