@@ -7,10 +7,10 @@ email: Risyandi.94@gmail.com
 description: >  
   A personal blogs I write about technical things, Advertising Technologies, Data Scientist, Design, and Ecosystem Digital Startup in Indonesia.
 baseurl: "/blogs"
-url: "https://risyandi.github.io"
+url: "https://risyandi.com/blogs"
 twitter_username: Risyandi94
 github_username:  Risyandi
-disqus_baseurl: "https://risyandi.com/"
+disqus_baseurl: "https://risyandi.com/blogs"
 disqus_shortname: risyandi
 permalink: :title
 cover: "/assets/header_image.jpg"
