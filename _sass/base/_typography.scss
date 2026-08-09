@@ -1,6 +1,7 @@
 body {
   @include font-feature-settings("kern", "liga", "pnum");
   -webkit-font-smoothing: antialiased;
+  background-color: $base-background-color;
   color: $base-font-color;
   font-family: $base-font-family;
   font-size: $base-font-size;
@@ -21,6 +22,7 @@ h6 {
 }
 h1 {
 	font-size: modular-scale(4);
+	color: $bc-red;
 }
 h2 {
 	font-size: modular-scale(3);
