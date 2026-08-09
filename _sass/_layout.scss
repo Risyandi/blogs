@@ -362,6 +362,26 @@ pre code.hljs {
 			margin-bottom: 1em;
 		}
 		.post-header-container {
+			max-width: $max-width;
+			margin: 1em;
+			border-radius: 8px;
+			overflow: hidden;
+			@include media($tablet) {
+				margin: 1em auto;
+			}
+			&:not(.has-cover) {
+				background-color: $white;
+				border: $base-border;
+				.post-logo {
+					display: block;
+					width: 100px;
+					height: 100px;
+					margin: 0 auto 1em;
+				}
+				.info {
+					color: $medium-gray;
+				}
+			}
 			.scrim {
 				padding: 2em 1em 1em 1em;
 			}
