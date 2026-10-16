@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Begin Jekyll SEO tag v2.9.0 -->
+<title>GSoC with Kubernetes - Week 1 | Risyandi</title>
+<meta name="generator" content="Jekyll v4.4.1" />
+<meta property="og:title" content="GSoC with Kubernetes - Week 1" />
+<meta name="author" content="Risyandi" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="My experience as a Google Summer of Code intern with Kubernetes (Cloud Native Computing Foundation). Week 1 - Community Bonding Period." />
+<meta name="twitter:description" property="og:description" content="My experience as a Google Summer of Code intern with Kubernetes (Cloud Native Computing Foundation). Week 1 - Community Bonding Period." />
+<link rel="canonical" href="https://risyandi.com/blogs/blogs/google-summer-of-code-kubernetes-week-1" />
+<meta property="og:url" content="https://risyandi.com/blogs/blogs/google-summer-of-code-kubernetes-week-1" />
+<meta property="og:site_name" content="Risyandi" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2017-05-14T00:00:00+00:00" />
+<meta property="article:modified_time" content="2017-05-14T00:00:00+00:00" />
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="GSoC with Kubernetes - Week 1" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Risyandi"},"dateModified":"2017-05-14T00:00:00+00:00","datePublished":"2017-05-14T00:00:00+00:00","description":"My experience as a Google Summer of Code intern with Kubernetes (Cloud Native Computing Foundation). Week 1 - Community Bonding Period.","headline":"GSoC with Kubernetes - Week 1","mainEntityOfPage":{"@type":"WebPage","@id":"https://risyandi.com/blogs/blogs/google-summer-of-code-kubernetes-week-1"},"publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"https://risyandi.com/blogs/blogs/assets/icons/logo.png"},"name":"Risyandi"},"url":"https://risyandi.com/blogs/blogs/google-summer-of-code-kubernetes-week-1"}</script>
+<!-- End Jekyll SEO tag -->
+
+  
+  <meta name="author" content="Risyandi">
+  <meta name="copyright" content="&copy; Risyandi 2026">
+  
+
+  <!-- External libraries -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.5/styles/monokai_sublime.min.css">
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/lightbox2/2.7.1/css/lightbox.css">
+
+  <!-- Favicon and icons (cactus, from risyandi.gitlab.io) -->
+  <link rel="shortcut icon" href="/blogs/assets/icons/favicon.ico">
+  <link rel="icon" type="image/png" sizes="192x192" href="/blogs/assets/icons/favicon-192.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/blogs/assets/icons/favicon-180.png">
+  <meta name="theme-color" content="#fafafa">
+
+  
+  <!-- Facebook OGP cards -->
+  <meta property="og:description" content="Getting in" />
+  <meta property="og:url" content="https://risyandi.com/blogs/blogs/google-summer-of-code-kubernetes-week-1" />
+  <meta property="og:site_name" content="Risyandi" />
+  <meta property="og:title" content="GSoC with Kubernetes - Week 1" />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="https://risyandi.com/blogs/blogs/assets/cactus-card.png" />
+  <meta property="og:image:type" content="image/jpg" />
+  <meta property="og:image:width" content="612" />
+  <meta property="og:image:height" content="605" />
+    
+  
+
+  
+  <!-- Twitter: card tags -->
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="GSoC with Kubernetes - Week 1">
+  <meta name="twitter:description" content="Getting in">
+  <meta name="twitter:image" content="https://risyandi.com/blogs/blogs/assets/cactus-card.png">
+  <meta name="twitter:url" content="https://risyandi.com/blogs">
+  
+
+  
+
+  <!-- Site styles -->
+  <link rel="stylesheet" href="/blogs/css/main.css">
+  <link rel="alternate" type="application/rss+xml" title="Risyandi" href="https://risyandi.com/blogs/blogs/feed.xml" />
+</head>
+
+
+  <body>
+
+    <header class="navigation" role="banner">
+  <div class="navigation-wrapper">
+    <a href="/blogs/" class="logo">
+      
+      <img src="/blogs/assets/icons/logo.png" alt="Risyandi">
+      
+    </a>
+    <a href="javascript:void(0)" class="navigation-menu-button" id="js-mobile-menu">
+      <i class="fa fa-bars"></i>
+    </a>
+    <nav role="navigation">
+      <ul id="js-navigation-menu" class="navigation-menu show">
+        
+          
+          <li class="nav-link">
+<a href="/blogs/about/">About</a>
+          
+        
+          
+          </li>
+<li class="nav-link">
+<a href="/blogs/archive/">Archive</a>
+          
+        
+          
+        
+          
+        
+          
+        
+          
+          </li>
+<li class="nav-link">
+<a href="/blogs/talks/">Talks</a>
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+      </li>
+</ul>
+    </nav>
+  </div>
+</header>
+
+
+    <div class="page-content">
+        <div class="post">
+
+<div class="post-header-container ">
+  <div class="scrim ">
+    <header class="post-header">
+      <img class="post-logo" src="/blogs/assets/icons/logo.png" alt="Risyandi">
+      <h1 class="title">GSoC with Kubernetes - Week 1</h1>
+      <p class="info">by <strong>Risyandi</strong></p>
+    </header>
+  </div>
+</div>
+
+<div class="wrapper">
+
+<section class="post-meta">
+  <div class="post-date">May 14, 2017</div>
+  <div class="post-categories">
+  
+  </div>
+</section>
+
+<article class="post-content">
+  <h1 id="getting-in">Getting in</h1>
+
+<p>In my last <a href="https://nikhita.github.io/experience-gophercon-india">post</a>, I mentioned about speaking at GopherCon India. It was a surreal experience and it introduced me to Kubernetes. I was aware of Kubernetes before (having used Docker) but didn’t really take the leap to contributing to it. Attending the conference made me go “Damn, this sounds so cool. I am definitely looking at the contributing guide after I get back home!”.</p>
+
+<p>Luckily, the day I got back home was the day when organizations for Google Summer of Code were announced. I was <strong>beyond enthralled</strong> to see <a href="https://github.com/cncf/soc">CNCF</a> on the list and started reading the documentation for Kubernetes right away. It took me about a week to get comfortable with k8s and the project, set up my development environment and understand the codebase. I solved a few issues for the pre-GSoC involvement, discussed and got my proposal reviewed from my mentor.</p>
+
+<p>After a month long wait, contributions and exams, I finally got the result that I had been selected for Google Summer of Code this year! Last winter, I had applied for <a href="https://wiki.gnome.org/Outreachy">Outreachy</a> and was going to be selected but couldn’t join later due to timeline restrictions (Outreachy needed two months of winter vacations while I had just one month free). I was bummed to hear that and my thirst to get into GSoC strengthed even more. Receiving the GSoC result was one of the best moments of my life!   <img class="emoji" title=":smile:" alt=":smile:" src="https://github.githubassets.com/images/icons/emoji/unicode/1f604.png" height="20" width="20"></p>
+
+<h1 id="my-project">My project</h1>
+
+<p>Kubernetes comes with many built-in API objects. However, it also offers you the feature to extend the Kubernetes API using Third Party Resources (TPRs). TPRs are a very exciting and crucial part of Kubernetes since it offers one to create their own custom objects. You can think of TPRs as being much like the schema for a database table. Once you have created the table, you can then start storing rows in the table. Once created, TPRs can act as the data model behind custom controllers or automation programs.</p>
+
+<p>The implementation to allow the creation of TPRs is present but the implementation has languished. There are multiple problems associated with it and one of my goals this summer is to work on these problems to drive them stable and to shower some love at TPRs! One of the main features I will be working on is implementing validation. If time permits, other features will also be added. You can read about the current situation of Third Party Resources <a href="https://github.com/kubernetes/features/issues/95">here</a>.</p>
+
+<h1 id="the-community">The Community</h1>
+
+<p>Google lets students get comfortable with the community, their projects and the development environment initially. The student is not required to code right away. This period is to allow students to refine their project ideas so they can code without any hassle during the coding period. Hence, this period is called the Community Bonding Period. I really liked this approach. <img class="emoji" title=":heart:" alt=":heart:" src="https://github.githubassets.com/images/icons/emoji/unicode/2764.png" height="20" width="20"></p>
+
+<p>My first week has been absolutely amazing! I had the <strong>best</strong> time working with my mentor - <a href="https://github.com/sttts">Dr. Stefan Schimanski</a>. Even when I did not know something, he explained with utmost patience without making me feel bad about not knowing it. Meanwhile, I was also encouraged to ask questions without hesitation. This gives a HUGE boost to us mentees while communicating with mentors. I am deeply thankful for his help.</p>
+
+<p>My experience interacting with other community members has been positive too. I tweeted about my gsoc selection and was overwhelmed to recieve such a warm welcome from the community! Even while interacting on slack and github, everyone has been very friendly. The environment is very pleasant and I am having great fun working with such an awesome community! Kubernetes takes the cake for being the friendliest open source community ever!</p>
+
+<p><br></p>
+
+<div align="center">
+<blockquote class="twitter-tweet" data-lang="en">
+<p lang="en" dir="ltr">Excited to work on <a href="https://twitter.com/kubernetesio">@kubernetesio</a> as my <a href="https://twitter.com/gsoc">@gsoc</a> project! 🎉 <a href="https://t.co/pir10SzTZe">https://t.co/pir10SzTZe</a></p>— Nikhita Raghunath (@TheNikhita) <a href="https://twitter.com/TheNikhita/status/860238784205606912">May 4, 2017</a>
+</blockquote>
+<script async="" src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+</div>
+
+<p><br></p>
+
+<p>The CNCF community has been very engaging and hospitable too. After the selection, CNCF released a <a href="https://www.cncf.io/blog/2017/05/04/cncf-brings-kubernetes-coredns-opentracing-prometheus-google-summer-code-2017/">blog post</a> on their website mentioning about us GSoC students and they were very friendly over email and slack as well. I feel very lucky to be part of CNCF. :)</p>
+
+<h1 id="the-work">The Work</h1>
+
+<ul>
+  <li>
+    <p>One of the main features I will be implementing for TPRs is validation. This week I started out with comparing two go json schema libraries that we could use for validation. I wrote benchmarks for the same and chose one of them after analyzing their strengths and weaknesses.</p>
+  </li>
+  <li>
+    <p>I will soon be publishing a design proposal for validation. I researched a bit more about it, made notes and wrote down tricky questions that the project could face. There are still some open questions and I will be addressing them and coming up with the draft proposal next week.</p>
+  </li>
+  <li>
+    <p><a href="https://github.com/deads2k">David</a> had been working on creating a stable base for TPRs (now it will probably be called Custom Resources). He even wrote a nice step-by-step approach on setting up the new kube-apiextensions-server which I transformed into a bash <a href="https://github.com/nikhita/gsoc-meta-k8s/blob/master/notes/set-kube-apiextensions-server.sh">script</a> for easy access. ;)</p>
+  </li>
+  <li>
+    <p>I began tinkering around with the new TPR code and started out writing integration tests for the same. The pull request can be seen <a href="https://github.com/kubernetes/kubernetes/pull/45721">here</a> and the list of integration tests can be seen <a href="https://github.com/kubernetes/kubernetes/issues/45511">here</a>. I plan to add more integration tests, solve issues and help out with <a href="https://github.com/kubernetes/kubernetes/issues/45728">migration</a> in the coming weeks.</p>
+  </li>
+</ul>
+
+<p>I have been maintaining a google doc with daily updates which serves as a neat log of what I am working on. A major benefit is that I can take a step back and see the overall progress of my project. I have collated everything related to my GSoC project in one <a href="https://github.com/nikhita/gsoc-meta-k8s">meta repository</a> on Github. If you are interested in knowing more about this project, please visit the repo for a better perspective on it. :)</p>
+
+<h1 id="conclusion">Conclusion</h1>
+
+<p>I don’t intend to write such long blog posts about my weekly progress in the future (I will definitely write, but they will be short and sweet). These blog posts provide a rather detailed and personal overview of my experience. Instead if you are interested in knowing only about the progress, you can visit the repo to get summarized weekly reports!</p>
+
+<p>When I started out with Kubernetes, I faced a lot of trouble getting a hang out of it. In the coming weeks, I also plan on writing a few blog posts for beginners. I believe that being a newbie myself, I can offer a better and a fresher perspective. So come back after a few weeks to read more!</p>
+
+<p>I am having immense fun working with the Kubernetes team and I plan on contributing more and continuing to have more fun over the summer! <img class="emoji" title=":tada:" alt=":tada:" src="https://github.githubassets.com/images/icons/emoji/unicode/1f389.png" height="20" width="20"></p>
+
+
+</article>
+
+
+
+<section class="rss">
+  <p class="rss-subscribe text"><strong>Subscribe <a href="/blogs/feed.xml">via RSS</a></strong></p>
+</section>
+
+<section class="share">
+  <span>Share: </span>
+  
+    
+    
+      <a href="//twitter.com/share?text=GSoC+with+Kubernetes+-+Week+1&amp;url=https%3A%2F%2Frisyandi.com%2Fblogs%2Fblogs%2Fgoogle-summer-of-code-kubernetes-week-1&amp;via=Risyandi94" onclick="window.open(this.href, 'twitter-share', 'width=550,height=255');return false;">
+        <i class="fa fa-twitter-square fa-lg"></i>
+      </a>
+    
+    
+    
+    
+    
+    
+    
+  
+    
+    
+    
+    
+    
+    
+    
+    
+  
+    
+    
+    
+    
+    
+    
+    
+    
+  
+    
+    
+    
+    
+    
+      <a href="//www.linkedin.com/shareArticle?mini=true&amp;url=https%3A%2F%2Frisyandi.com%2Fblogs%2Fblogs%2Fgoogle-summer-of-code-kubernetes-week-1" onclick="window.open(this.href, 'linkedin-share', 'width=550,height=255');return false;">
+        <i class="fa fa-linkedin-square fa-lg"></i>
+      </a>
+    
+    
+    
+    
+  
+    
+    
+    
+    
+    
+    
+    
+    
+  
+    
+    
+    
+    
+    
+    
+    
+    
+  
+    
+    
+    
+    
+    
+    
+    
+    
+  
+    
+    
+    
+    
+    
+    
+    
+    
+  
+    
+    
+    
+    
+    
+    
+    
+    
+  
+    
+    
+    
+    
+    
+    
+    
+    
+  
+    
+    
+    
+    
+    
+    
+    
+    
+  
+    
+    
+    
+    
+    
+    
+    
+    
+  
+    
+    
+    
+    
+    
+    
+    
+    
+  
+    
+    
+    
+    
+    
+    
+    
+    
+  
+    
+    
+    
+    
+    
+    
+    
+    
+  
+</section>
+
+  <section class="post-navigation">
+    <span class="prev-post">
+      
+        <a href="/blogs/experience-gophercon-india">
+          <span class="fa-stack fa-lg">
+            <i class="fa fa-square fa-stack-2x"></i>
+            <i class="fa fa-angle-double-left fa-stack-1x fa-inverse"></i>
+          </span>
+          <span class="page-number">My experience at GopherCon India 2017</span>
+        </a>
+      
+    </span>
+    <span class="next-post">
+      
+        <a href="/blogs/google-summer-of-code-kubernetes-week2-3-community-bonding">
+          <span class="page-number">GSoC with Kubernetes - Week 2 and 3</span>
+          <span class="fa-stack fa-lg">
+            <i class="fa fa-square fa-stack-2x"></i>
+            <i class="fa fa-angle-double-right fa-stack-1x fa-inverse"></i>
+          </span>
+        </a>
+      
+    </span>
+  </section>
+
+
+
+
+<section class="disqus">
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+    var disqus_shortname = 'risyandi';
+    console.log(disqus_shortname, ":short-name");
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+</noscript>
+  <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</section>
+
+
+
+</div>
+</div>
+
+    </div>
+
+    <footer class="site-footer">
+
+  <div class="wrapper">
+    <div class="site-navigation">
+
+      <p><strong>Site Map</strong></p>
+      <ul class="pages">
+        
+        
+        <li class="nav-link">
+<a href="/blogs/about/">About</a>
+          
+          
+        
+        </li>
+<li class="nav-link">
+<a href="/blogs/archive/">Archive</a>
+          
+          
+        
+          
+        
+          
+        
+          
+        
+        </li>
+<li class="nav-link">
+<a href="/blogs/talks/">Talks</a>
+          
+          
+        
+          
+        
+          
+        
+          
+        
+          
+      </li>
+</ul>
+    </div>
+
+    <div class="site-contact">
+
+      <p><strong>Contact</strong></p>
+      <ul class="social-media-list">
+        <li>
+          <a href="mailto:Risyandi.94@gmail.com">
+            <i class="fa fa-envelope-o"></i>
+            <span class="username">Email</span>
+          </a>
+        </li>
+
+        
+        
+        <li>
+          <a href="https://twitter.com/Risyandi94" title="Follow me on Twitter" target="_blank">
+            <i class="fa fa-twitter"></i>
+            <span class="username">Twitter</span>
+          </a>
+        </li>
+        
+        
+        
+        <li>
+          <a href="https://quora.com/profile/Risyandi" title="Follow me on Quora" target="_blank">
+            <i class="fa fa-quora"></i>
+            <span class="username">Quora</span>
+          </a>
+        </li>
+        
+        
+        
+        <li>
+          <a href="https://github.com/risyandi" title="Fork me on GitHub" target="_blank">
+            <i class="fa fa-github"></i>
+            <span class="username">GitHub</span>
+          </a>
+        </li>
+        
+        
+        
+        <li>
+          <a href="https://linkedin.com/in/risyandi94" title="Connect with me on LinkedIn" target="_blank">
+            <i class="fa fa-linkedin"></i>
+            <span class="username">LinkedIn</span>
+          </a>
+        </li>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+      </ul>
+    </div>
+
+    <div class="site-signature">
+      <p class="rss-subscribe text"><strong>Subscribe <a href="/blogs/feed.xml">via RSS <i class="fa fa-rss"></i></a></strong></p>
+      <p class="text">A personal blogs I write about technical things, Advertising Technologies, Data Scientist, Design, and Ecosystem Digital Startup in Indonesia.
+</p>
+    </div>
+
+  </div>
+
+</footer>
+
+<!-- Scripts -->
+<script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.5/highlight.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/lightbox2/2.7.1/js/lightbox.min.js"></script>
+<script id="dsq-count-scr" src="//risyandi.disqus.com/count.js" async></script>
+<script>
+
+  $(document).ready(function () {
+
+    // Syntax highlighting
+    hljs.initHighlightingOnLoad();
+
+    // Header
+    var menuToggle = $('#js-mobile-menu').unbind();
+    $('#js-navigation-menu').removeClass("show");
+    menuToggle.on('click', function (e) {
+      e.preventDefault();
+      $('#js-navigation-menu').slideToggle(function () {
+        if ($('#js-navigation-menu').is(':hidden')) {
+          $('#js-navigation-menu').removeAttr('style');
+        }
+      });
+    });
+
+    //Make sure all the post's links open in a new tab
+    jQuery('.post-content a, .post-excerpt a').not('.footnote, .reversefootnote').attr('target', '_blank');
+
+  });
+
+</script>
+
+
+
+  </body>
+
+</html>

@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Begin Jekyll SEO tag v2.9.0 -->
+<title>GSoC with Kubernetes - Week 2 and 3 | Risyandi</title>
+<meta name="generator" content="Jekyll v4.4.1" />
+<meta property="og:title" content="GSoC with Kubernetes - Week 2 and 3" />
+<meta name="author" content="Risyandi" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="My experience as a Google Summer of Code intern with Kubernetes (Cloud Native Computing Foundation). Week 2 and 3 - Community Bonding Period." />
+<meta name="twitter:description" property="og:description" content="My experience as a Google Summer of Code intern with Kubernetes (Cloud Native Computing Foundation). Week 2 and 3 - Community Bonding Period." />
+<link rel="canonical" href="https://risyandi.com/blogs/blogs/google-summer-of-code-kubernetes-week2-3-community-bonding" />
+<meta property="og:url" content="https://risyandi.com/blogs/blogs/google-summer-of-code-kubernetes-week2-3-community-bonding" />
+<meta property="og:site_name" content="Risyandi" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2017-05-29T00:00:00+00:00" />
+<meta property="article:modified_time" content="2017-05-29T00:00:00+00:00" />
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="GSoC with Kubernetes - Week 2 and 3" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Risyandi"},"dateModified":"2017-05-29T00:00:00+00:00","datePublished":"2017-05-29T00:00:00+00:00","description":"My experience as a Google Summer of Code intern with Kubernetes (Cloud Native Computing Foundation). Week 2 and 3 - Community Bonding Period.","headline":"GSoC with Kubernetes - Week 2 and 3","mainEntityOfPage":{"@type":"WebPage","@id":"https://risyandi.com/blogs/blogs/google-summer-of-code-kubernetes-week2-3-community-bonding"},"publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"https://risyandi.com/blogs/blogs/assets/icons/logo.png"},"name":"Risyandi"},"url":"https://risyandi.com/blogs/blogs/google-summer-of-code-kubernetes-week2-3-community-bonding"}</script>
+<!-- End Jekyll SEO tag -->
+
+  
+  <meta name="author" content="Risyandi">
+  <meta name="copyright" content="&copy; Risyandi 2026">
+  
+
+  <!-- External libraries -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.5/styles/monokai_sublime.min.css">
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/lightbox2/2.7.1/css/lightbox.css">
+
+  <!-- Favicon and icons (cactus, from risyandi.gitlab.io) -->
+  <link rel="shortcut icon" href="/blogs/assets/icons/favicon.ico">
+  <link rel="icon" type="image/png" sizes="192x192" href="/blogs/assets/icons/favicon-192.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/blogs/assets/icons/favicon-180.png">
+  <meta name="theme-color" content="#fafafa">
+
+  
+  <!-- Facebook OGP cards -->
+  <meta property="og:description" content="This is an update of Week 2 and 3 for my Google Summer of Code project with Kubernetes (Cloud Native Computing Foundation). I ended up coding a lot more, tal..." />
+  <meta property="og:url" content="https://risyandi.com/blogs/blogs/google-summer-of-code-kubernetes-week2-3-community-bonding" />
+  <meta property="og:site_name" content="Risyandi" />
+  <meta property="og:title" content="GSoC with Kubernetes - Week 2 and 3" />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="https://risyandi.com/blogs/blogs/assets/cactus-card.png" />
+  <meta property="og:image:type" content="image/jpg" />
+  <meta property="og:image:width" content="612" />
+  <meta property="og:image:height" content="605" />
+    
+  
+
+  
+  <!-- Twitter: card tags -->
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="GSoC with Kubernetes - Week 2 and 3">
+  <meta name="twitter:description" content="This is an update of Week 2 and 3 for my Google Summer of Code project with Kubernetes (Cloud Native Computing Foundation). I ended up coding a lot more, tal...">
+  <meta name="twitter:image" content="https://risyandi.com/blogs/blogs/assets/cactus-card.png">
+  <meta name="twitter:url" content="https://risyandi.com/blogs">
+  
+
+  
+
+  <!-- Site styles -->
+  <link rel="stylesheet" href="/blogs/css/main.css">
+  <link rel="alternate" type="application/rss+xml" title="Risyandi" href="https://risyandi.com/blogs/blogs/feed.xml" />
+</head>
+
+
+  <body>
+
+    <header class="navigation" role="banner">
+  <div class="navigation-wrapper">
+    <a href="/blogs/" class="logo">
+      
+      <img src="/blogs/assets/icons/logo.png" alt="Risyandi">
+      
+    </a>
+    <a href="javascript:void(0)" class="navigation-menu-button" id="js-mobile-menu">
+      <i class="fa fa-bars"></i>
+    </a>
+    <nav role="navigation">
+      <ul id="js-navigation-menu" class="navigation-menu show">
+        
+          
+          <li class="nav-link">
+<a href="/blogs/about/">About</a>
+          
+        
+          
+          </li>
+<li class="nav-link">
+<a href="/blogs/archive/">Archive</a>
+          
+        
+          
+        
+          
+        
+          
+        
+          
+          </li>
+<li class="nav-link">
+<a href="/blogs/talks/">Talks</a>
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+      </li>
+</ul>
+    </nav>
+  </div>
+</header>
+
+
+    <div class="page-content">
+        <div class="post">
+
+<div class="post-header-container ">
+  <div class="scrim ">
+    <header class="post-header">
+      <img class="post-logo" src="/blogs/assets/icons/logo.png" alt="Risyandi">
+      <h1 class="title">GSoC with Kubernetes - Week 2 and 3</h1>
+      <p class="info">by <strong>Risyandi</strong></p>
+    </header>
+  </div>
+</div>
+
+<div class="wrapper">
+
+<section class="post-meta">
+  <div class="post-date">May 29, 2017</div>
+  <div class="post-categories">
+  
+  </div>
+</section>
+
+<article class="post-content">
+  <p>This is an update of Week 2 and 3 for my Google Summer of Code project with Kubernetes (Cloud Native Computing Foundation). I ended up coding a lot more, talking to other community members and having even more fun. <img class="emoji" title=":smile:" alt=":smile:" src="https://github.githubassets.com/images/icons/emoji/unicode/1f604.png" height="20" width="20"></p>
+
+<h2 id="the-code-part">The Code Part</h2>
+
+<p>I mainly wrote a lot of integration tests and fixed bugs along the way for CRDs. Code freeze is up on June 1 so I’d like to get all integration tests by then (only a couple remaining!). So CRDs should be perfectly polished and ready by 1.7.</p>
+
+<p>I also collated ideas related to the proposal and added a validation schema for Pod - will be working on the proposal more in the next week (after the code freeze).</p>
+
+<ul>
+  <li>Added the following integration tests:
+    <ul>
+      <li>test for no namespace rejection</li>
+      <li>test for creating resources with same name and different namespace</li>
+      <li>test for checking if integers are preserved while decoding (originally a TPR regression)</li>
+      <li>test for self link of cluster scoped resources</li>
+      <li>test for name conflicts</li>
+    </ul>
+  </li>
+  <li>Created some more PRs/issues:
+    <ul>
+      <li>Add plural name for CustomResources example in <a href="https://github.com/kubernetes/kubernetes/pull/45793">#45793</a>
+</li>
+      <li>Fixed the controller doc in <a href="https://github.com/kubernetes/community/pull/621">#621</a>
+</li>
+      <li>Created an <a href="https://github.com/kubernetes/test-infra/issues/2787">issue</a> on <code class="language-plaintext highlighter-rouge">kubernetes/test-infra</code> for a flake that was hitting all PRs. See <a href="https://github.com/kubernetes/kubernetes/issues/45978">this</a> issue for further discussion.</li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="the-tale-of-crd-deletion">The Tale of CRD Deletion:</h2>
+<p>While writing the test for name conflicts, I hit a lot of bugs and it was interesting solving them!</p>
+
+<p>It initially caused a panic (<a href="https://gist.github.com/nikhita/345c3629fc4a942b7c9ee5275dfeb74b">stack trace</a>). This occurred because now we deleted from storage instead of the client (after this <a href="https://github.com/kubernetes/kubernetes/pull/46296">PR</a>). This was racing the storage and causing a nil dereference. PR with fix: <a href="https://github.com/kubernetes/kubernetes/pull/46430">#46430</a>.</p>
+
+<p>Did a rebase again but still did not work! Now I got:  <code class="language-plaintext highlighter-rouge">"reason": "InstanceDeletionFailed"</code> and <code class="language-plaintext highlighter-rouge">"message": "could not list instances: unable to find a custom resource client for noxus.mygroup.example.com"</code>. The problem turned out to be that the storage map was only filled if a CR (not the CRD!) was accessed via some CRUD request. So this worked only if you created CRs before the CRD deletion. PR with fix: <a href="https://github.com/kubernetes/kubernetes/pull/46501">#46501</a>.</p>
+
+<p>Also fixed the naming controller so that when a resource is deleted, other resources in the same group are added to the queue. This is necessary since the deleted CRD can free names. Added a <code class="language-plaintext highlighter-rouge">requeueAllOtherGroupCRDs</code> function for the above. Had a little trouble making the synchronization was right. I was using <code class="language-plaintext highlighter-rouge">time.Sleep</code> before which looked very wrong. Tried polling later, then thought that polling was in fact not needed at all! Finally added in the right place (in <code class="language-plaintext highlighter-rouge">apierrors.NotFound(err)</code>) and got it working! <img class="emoji" title=":boom:" alt=":boom:" src="https://github.githubassets.com/images/icons/emoji/unicode/1f4a5.png" height="20" width="20"></p>
+
+<h2 id="the-community-bonding-part">The Community Bonding Part</h2>
+
+<p>I talked to David (who is working on CRDs a lot) about the project/CRDs and he was very helpful! I had not spoked to him before so this was a nice community bonding exercise.</p>
+
+<p>I also helped a few folks on Slack and answered their questions. Lots of people reached out to be in these two weeks asking me how they could contribute to Kubernetes. It was exciting seeing the sudden interest! I think most of them faced the issue of not being able to find a beginner-friendly task. I pointed them to a few easy issues but hope to come up with a solution to that!</p>
+
+<p>I even did my first small code review. That felt great because I never thought I could ever be so confident about a codebase to do a review of others’ code. <img class="emoji" title=":grinning:" alt=":grinning:" src="https://github.githubassets.com/images/icons/emoji/unicode/1f600.png" height="20" width="20"></p>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>I am really enjoying working with the Kubernetes community. Everyone is very friendly and I look forward to Mondays now (yes, you read that right!). In other news, I got a scholarship from WomenWhoGo and GoBridge to attend GopherCon at Denver. Looking forward to meeting people I have been interacting with online and making new friends! :)</p>
+
+<p>PS: Had some Twitter fun this week -</p>
+
+<p><br></p>
+
+<div align="center">
+<blockquote class="twitter-tweet" data-lang="en">
+<p lang="en" dir="ltr"><a href="https://twitter.com/TheNikhita">@TheNikhita</a> Thanks for your work so far <a href="https://twitter.com/TheNikhita">@TheNikhita</a>! You fixed a bug that we hit in Kubernetes and is getting backported to the next 1.6.x branch 👍👍👍</p>— Brandon Philips (@BrandonPhilips) <a href="https://twitter.com/BrandonPhilips/status/867820077063602176">May 25, 2017</a>
+</blockquote>
+<script async="" src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+<br>
+<blockquote class="twitter-tweet" data-lang="en">
+<p lang="en" dir="ltr">Love seeing <a href="https://twitter.com/hashtag/gsoc?src=hash">#gsoc</a> interns making impact in <a href="https://twitter.com/kubernetesio">@kubernetesio</a> <a href="https://t.co/zSPxOZIZx7">https://t.co/zSPxOZIZx7</a> <a href="https://t.co/rj9ooTHFOo">https://t.co/rj9ooTHFOo</a></p>— Brandon Philips (@BrandonPhilips) <a href="https://twitter.com/BrandonPhilips/status/867821071872909312">May 25, 2017</a>
+</blockquote>
+<script async="" src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+</div>
+
+<p><br></p>
+
+
+</article>
+
+
+
+<section class="rss">
+  <p class="rss-subscribe text"><strong>Subscribe <a href="/blogs/feed.xml">via RSS</a></strong></p>
+</section>
+
+<section class="share">
+  <span>Share: </span>
+  
+    
+    
+      <a href="//twitter.com/share?text=GSoC+with+Kubernetes+-+Week+2+and+3&amp;url=https%3A%2F%2Frisyandi.com%2Fblogs%2Fblogs%2Fgoogle-summer-of-code-kubernetes-week2-3-community-bonding&amp;via=Risyandi94" onclick="window.open(this.href, 'twitter-share', 'width=550,height=255');return false;">
+        <i class="fa fa-twitter-square fa-lg"></i>
+      </a>
+    
+    
+    
+    
+    
+    
+    
+  
+    
+    
+    
+    
+    
+    
+    
+    
+  
+    
+    
+    
+    
+    
+    
+    
+    
+  
+    
+    
+    
+    
+    
+      <a href="//www.linkedin.com/shareArticle?mini=true&amp;url=https%3A%2F%2Frisyandi.com%2Fblogs%2Fblogs%2Fgoogle-summer-of-code-kubernetes-week2-3-community-bonding" onclick="window.open(this.href, 'linkedin-share', 'width=550,height=255');return false;">
+        <i class="fa fa-linkedin-square fa-lg"></i>
+      </a>
+    
+    
+    
+    
+  
+    
+    
+    
+    
+    
+    
+    
+    
+  
+    
+    
+    
+    
+    
+    
+    
+    
+  
+    
+    
+    
+    
+    
+    
+    
+    
+  
+    
+    
+    
+    
+    
+    
+    
+    
+  
+    
+    
+    
+    
+    
+    
+    
+    
+  
+    
+    
+    
+    
+    
+    
+    
+    
+  
+    
+    
+    
+    
+    
+    
+    
+    
+  
+    
+    
+    
+    
+    
+    
+    
+    
+  
+    
+    
+    
+    
+    
+    
+    
+    
+  
+    
+    
+    
+    
+    
+    
+    
+    
+  
+    
+    
+    
+    
+    
+    
+    
+    
+  
+</section>
+
+  <section class="post-navigation">
+    <span class="prev-post">
+      
+        <a href="/blogs/google-summer-of-code-kubernetes-week-1">
+          <span class="fa-stack fa-lg">
+            <i class="fa fa-square fa-stack-2x"></i>
+            <i class="fa fa-angle-double-left fa-stack-1x fa-inverse"></i>
+          </span>
+          <span class="page-number">GSoC with Kubernetes - Week 1</span>
+        </a>
+      
+    </span>
+    <span class="next-post">
+      
+        <a href="/blogs/how-to-update-vscode">
+          <span class="page-number">How to update VSCode on Linux</span>
+          <span class="fa-stack fa-lg">
+            <i class="fa fa-square fa-stack-2x"></i>
+            <i class="fa fa-angle-double-right fa-stack-1x fa-inverse"></i>
+          </span>
+        </a>
+      
+    </span>
+  </section>
+
+
+
+
+<section class="disqus">
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+    var disqus_shortname = 'risyandi';
+    console.log(disqus_shortname, ":short-name");
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+</noscript>
+  <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</section>
+
+
+
+</div>
+</div>
+
+    </div>
+
+    <footer class="site-footer">
+
+  <div class="wrapper">
+    <div class="site-navigation">
+
+      <p><strong>Site Map</strong></p>
+      <ul class="pages">
+        
+        
+        <li class="nav-link">
+<a href="/blogs/about/">About</a>
+          
+          
+        
+        </li>
+<li class="nav-link">
+<a href="/blogs/archive/">Archive</a>
+          
+          
+        
+          
+        
+          
+        
+          
+        
+        </li>
+<li class="nav-link">
+<a href="/blogs/talks/">Talks</a>
+          
+          
+        
+          
+        
+          
+        
+          
+        
+          
+      </li>
+</ul>
+    </div>
+
+    <div class="site-contact">
+
+      <p><strong>Contact</strong></p>
+      <ul class="social-media-list">
+        <li>
+          <a href="mailto:Risyandi.94@gmail.com">
+            <i class="fa fa-envelope-o"></i>
+            <span class="username">Email</span>
+          </a>
+        </li>
+
+        
+        
+        <li>
+          <a href="https://twitter.com/Risyandi94" title="Follow me on Twitter" target="_blank">
+            <i class="fa fa-twitter"></i>
+            <span class="username">Twitter</span>
+          </a>
+        </li>
+        
+        
+        
+        <li>
+          <a href="https://quora.com/profile/Risyandi" title="Follow me on Quora" target="_blank">
+            <i class="fa fa-quora"></i>
+            <span class="username">Quora</span>
+          </a>
+        </li>
+        
+        
+        
+        <li>
+          <a href="https://github.com/risyandi" title="Fork me on GitHub" target="_blank">
+            <i class="fa fa-github"></i>
+            <span class="username">GitHub</span>
+          </a>
+        </li>
+        
+        
+        
+        <li>
+          <a href="https://linkedin.com/in/risyandi94" title="Connect with me on LinkedIn" target="_blank">
+            <i class="fa fa-linkedin"></i>
+            <span class="username">LinkedIn</span>
+          </a>
+        </li>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+      </ul>
+    </div>
+
+    <div class="site-signature">
+      <p class="rss-subscribe text"><strong>Subscribe <a href="/blogs/feed.xml">via RSS <i class="fa fa-rss"></i></a></strong></p>
+      <p class="text">A personal blogs I write about technical things, Advertising Technologies, Data Scientist, Design, and Ecosystem Digital Startup in Indonesia.
+</p>
+    </div>
+
+  </div>
+
+</footer>
+
+<!-- Scripts -->
+<script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.5/highlight.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/lightbox2/2.7.1/js/lightbox.min.js"></script>
+<script id="dsq-count-scr" src="//risyandi.disqus.com/count.js" async></script>
+<script>
+
+  $(document).ready(function () {
+
+    // Syntax highlighting
+    hljs.initHighlightingOnLoad();
+
+    // Header
+    var menuToggle = $('#js-mobile-menu').unbind();
+    $('#js-navigation-menu').removeClass("show");
+    menuToggle.on('click', function (e) {
+      e.preventDefault();
+      $('#js-navigation-menu').slideToggle(function () {
+        if ($('#js-navigation-menu').is(':hidden')) {
+          $('#js-navigation-menu').removeAttr('style');
+        }
+      });
+    });
+
+    //Make sure all the post's links open in a new tab
+    jQuery('.post-content a, .post-excerpt a').not('.footnote, .reversefootnote').attr('target', '_blank');
+
+  });
+
+</script>
+
+
+
+  </body>
+
+</html>

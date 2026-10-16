@@ -1,0 +1,874 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Begin Jekyll SEO tag v2.9.0 -->
+<title>How to build a blog using Github, Jekyll and Lanyon | Risyandi</title>
+<meta name="generator" content="Jekyll v4.4.1" />
+<meta property="og:title" content="How to build a blog using Github, Jekyll and Lanyon" />
+<meta name="author" content="Risyandi" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="This is a detailed tutorial for making your blog using Github pages. It covers every thing that you need to do - step by step!" />
+<meta name="twitter:description" property="og:description" content="This is a detailed tutorial for making your blog using Github pages. It covers every thing that you need to do - step by step!" />
+<link rel="canonical" href="https://risyandi.com/blogs/blogs/build-blog-using-github-jekyll" />
+<meta property="og:url" content="https://risyandi.com/blogs/blogs/build-blog-using-github-jekyll" />
+<meta property="og:site_name" content="Risyandi" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2016-08-18T00:00:00+00:00" />
+<meta property="article:modified_time" content="2016-08-18T00:00:00+00:00" />
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="How to build a blog using Github, Jekyll and Lanyon" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Risyandi"},"dateModified":"2016-08-18T00:00:00+00:00","datePublished":"2016-08-18T00:00:00+00:00","description":"This is a detailed tutorial for making your blog using Github pages. It covers every thing that you need to do - step by step!","headline":"How to build a blog using Github, Jekyll and Lanyon","mainEntityOfPage":{"@type":"WebPage","@id":"https://risyandi.com/blogs/blogs/build-blog-using-github-jekyll"},"publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"https://risyandi.com/blogs/blogs/assets/icons/logo.png"},"name":"Risyandi"},"url":"https://risyandi.com/blogs/blogs/build-blog-using-github-jekyll"}</script>
+<!-- End Jekyll SEO tag -->
+
+  
+  <meta name="author" content="Risyandi">
+  <meta name="copyright" content="&copy; Risyandi 2026">
+  
+
+  <!-- External libraries -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.5/styles/monokai_sublime.min.css">
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/lightbox2/2.7.1/css/lightbox.css">
+
+  <!-- Favicon and icons (cactus, from risyandi.gitlab.io) -->
+  <link rel="shortcut icon" href="/blogs/assets/icons/favicon.ico">
+  <link rel="icon" type="image/png" sizes="192x192" href="/blogs/assets/icons/favicon-192.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/blogs/assets/icons/favicon-180.png">
+  <meta name="theme-color" content="#fafafa">
+
+  
+  <!-- Facebook OGP cards -->
+  <meta property="og:description" content="UPDATE: I redesigned this blog using Centrarium. Though my blog does not reflect the steps in this post, this tutorial helped me to rebuild my blog. I hope t..." />
+  <meta property="og:url" content="https://risyandi.com/blogs/blogs/build-blog-using-github-jekyll" />
+  <meta property="og:site_name" content="Risyandi" />
+  <meta property="og:title" content="How to build a blog using Github, Jekyll and Lanyon" />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="https://risyandi.com/blogs/blogs/assets/cactus-card.png" />
+  <meta property="og:image:type" content="image/jpg" />
+  <meta property="og:image:width" content="612" />
+  <meta property="og:image:height" content="605" />
+    
+  
+
+  
+  <!-- Twitter: card tags -->
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="How to build a blog using Github, Jekyll and Lanyon">
+  <meta name="twitter:description" content="UPDATE: I redesigned this blog using Centrarium. Though my blog does not reflect the steps in this post, this tutorial helped me to rebuild my blog. I hope t...">
+  <meta name="twitter:image" content="https://risyandi.com/blogs/blogs/assets/cactus-card.png">
+  <meta name="twitter:url" content="https://risyandi.com/blogs">
+  
+
+  
+
+  <!-- Site styles -->
+  <link rel="stylesheet" href="/blogs/css/main.css">
+  <link rel="alternate" type="application/rss+xml" title="Risyandi" href="https://risyandi.com/blogs/blogs/feed.xml" />
+</head>
+
+
+  <body>
+
+    <header class="navigation" role="banner">
+  <div class="navigation-wrapper">
+    <a href="/blogs/" class="logo">
+      
+      <img src="/blogs/assets/icons/logo.png" alt="Risyandi">
+      
+    </a>
+    <a href="javascript:void(0)" class="navigation-menu-button" id="js-mobile-menu">
+      <i class="fa fa-bars"></i>
+    </a>
+    <nav role="navigation">
+      <ul id="js-navigation-menu" class="navigation-menu show">
+        
+          
+          <li class="nav-link"><a href="/blogs/about/">About</a>
+          
+        
+          
+          <li class="nav-link"><a href="/blogs/archive/">Archive</a>
+          
+        
+          
+        
+          
+        
+          
+        
+          
+          <li class="nav-link"><a href="/blogs/talks/">Talks</a>
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+      </ul>
+    </nav>
+  </div>
+</header>
+
+
+    <div class="page-content">
+        <div class="post">
+
+<div class="post-header-container " >
+  <div class="scrim ">
+    <header class="post-header">
+      <img class="post-logo" src="/blogs/assets/icons/logo.png" alt="Risyandi">
+      <h1 class="title">How to build a blog using Github, Jekyll and Lanyon</h1>
+      <p class="info">by <strong>Risyandi</strong></p>
+    </header>
+  </div>
+</div>
+
+<div class="wrapper">
+
+<section class="post-meta">
+  <div class="post-date">August 18, 2016</div>
+  <div class="post-categories">
+  
+  </div>
+</section>
+
+<article class="post-content">
+  <p>UPDATE: I redesigned this blog using <a href="https://github.com/bencentra/centrarium">Centrarium</a>. Though my blog does not reflect the steps in this post, this tutorial helped me to rebuild my blog. I hope this helps you too!</p>
+
+<p>I built this blog using Github pages, <a href="http://jekyllrb.com">Jekyll</a> and the <a href="http://lanyon.getpoole.com/">Lanyon</a> theme. The most amazing part is that it’s free, minimalist, uses Markdown and you can get it running in no time! Also, it does not feel bloated like Wordpress, etc.</p>
+
+<p>Here’s a short tutorial on how I made this blog. Ready to learn? Let’s get started!</p>
+
+<p><strong>Note: If you are not interested to do the setup yourself, simply fork <a href="https://github.com/nikhita/nikhita.github.io">my repo</a> and make the changes to include your details.</strong></p>
+
+<h2 id="table-of-contents">Table of Contents:</h2>
+
+<ol>
+  <li><a href="#installing-jekyll">Installing Jekyll</a></li>
+  <li><a href="#using-lanyon">Using Lanyon</a></li>
+  <li><a href="#dir-struct">Exploring the directory structure</a></li>
+  <li><a href="#config">Modifying configuration file</a></li>
+  <li><a href="#archive">Adding an archive page</a></li>
+  <li><a href="#disqus">Integrating Disqus comments</a></li>
+  <li><a href="#ga">Enabling Google Analytics</a></li>
+  <li><a href="#favicon">Adding custom favicon</a></li>
+  <li><a href="#photo">Adding your photo to the sidebar</a></li>
+  <li><a href="#social-media">Adding social media buttons</a></li>
+  <li><a href="#font">Changing the font</a></li>
+  <li><a href="#other-tips">Other tips</a></li>
+  <li><a href="#conclusion">Conclusion</a></li>
+</ol>
+
+<h2 id="1-installing-jekyll"><a name="installing-jekyll"></a>1. Installing Jekyll</h2>
+
+<p>We are going to use Jekyll as a static site generator to build our website. Jekyll is written in Ruby and requires Ruby to be installed on your system. Chances are, you already have ruby installed. But Jekyll 2 requires v1.9.3 or greater and Jekyll 3 requires v2.0 or greater. Here, we’ll use v2.0. Note that we’ll also need the development headers. So go ahead and type this in your terminal:</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">sudo </span>apt-get <span class="nb">install </span>ruby2.0 ruby2.0-dev
+</code></pre></div></div>
+
+<p>Now, check your ruby version using:</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>ruby <span class="nt">--version</span>
+</code></pre></div></div>
+
+<p>When I type that into my terminal, I get something like this: <code class="language-plaintext highlighter-rouge">ruby 2.0.0p384 (2014-01-12) [x86_64-linux-gnu]</code>. If you find some other ruby version as your default version, you’ll need to set this as your default one. For this, you can use RVM.</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">sudo </span>apt-get <span class="nb">install </span>zlib1g-dev build-essential libssl-dev libreadline-dev libyaml-dev libsqlite3-dev sqlite3 libxml2 libxml2-dev libxslt-dev gawk libgdbm-dev libncurses5-dev automake libtool bison libffi-dev nodejs
+<span class="se">\c</span>url <span class="nt">-sSL</span> https://get.rvm.io | bash <span class="nt">-s</span> stable
+</code></pre></div></div>
+
+<p>Then set the default ruby version using (you can use other ruby versions as well):</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>rvm <span class="nt">--default</span> use 2.0.0
+</code></pre></div></div>
+
+<p>You’ll also need Rubygems - which is a package management framework for Ruby. You can download it from  <a href="https://rubygems.org/pages/download/">here</a>. Now, we can finally install jekyll!</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>gem <span class="nb">install </span>jekyll
+</code></pre></div></div>
+
+<p>Great, now we can proceed to use Lanyon! :)</p>
+
+<h2 id="2-using-lanyon">2. <a name="using-lanyon"></a>Using Lanyon</h2>
+
+<p>I like the Lanyon theme since it focuses more on content and is minimalistic. If you are not a fan of sidebars, you can checkout <a href="http://demo.getpoole.com/">Poole</a> or if you prefer a static sidebar, have a look at <a href="http://hyde.getpoole.com/">Hyde</a>. Decided on your theme? Let’s move ahead!</p>
+
+<p>First of all, you will need to create a repository having the name <em>username.github.io</em>. For example, my Github username is <em>nikhita</em> so I have named by repo as <em>nikhita.github.io</em>. After you do this, clone this repository onto your local computer. Replace <code class="language-plaintext highlighter-rouge">username</code> with your real username.</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>git clone https://github.com/username/username.github.io.git
+</code></pre></div></div>
+
+<p>Next, download the Lanyon zip file from <a href="https://github.com/poole/lanyon/archive/master.zip">here</a> and extract it into your <em>username.github.io</em> folder. Alternatively, you can fork the Lanyon repo and change the forked repository’s name as <em>username.github.io</em>. After that, clone the forked repo onto your local computer.</p>
+
+<p>Now, let’s move into our folder and run the default page on our local server.</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">cd </span>username.github.io
+<span class="nv">$ </span>jekyll build
+<span class="nv">$ </span>jekyll serve
+</code></pre></div></div>
+
+<p>Open up your browser and go to: http://localhost:4000 and voila, the website is hosted locally on your system and is ready to be tweaked!</p>
+
+<h2 id="3-exploring-the-directory-structure"><a name="dir-struct"></a>3. Exploring the directory structure</h2>
+
+<p>Before we go ahead and make customizations, let’s have a look at the files in your folder. Once we learn the design, we can go ahead and make changes confidently!</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">.</span>
+|-- 404.html
+|-- about.md
+|-- atom.xml
+|-- _config.yml
+|-- _includes
+|   |-- head.html
+|   <span class="sb">`</span><span class="nt">--</span> sidebar.html
+|-- index.html
+|-- _layouts
+|   |-- default.ht_ml
+|   |-- page.html
+|   <span class="sb">`</span><span class="nt">--</span> post.html
+|-- LICENSE.md
+|-- _posts
+|   |-- 2013-12-31-whats-jekyll.md
+|   |-- 2014-01-01-example-content.md
+|   <span class="sb">`</span><span class="nt">--</span> 2014-01-02-introducing-lanyon.md
+|-- public
+|   |-- apple-touch-icon-precomposed.png
+|   |-- css
+|   |   |-- lanyon.css
+|   |   |-- poole.css
+|   |   <span class="sb">`</span><span class="nt">--</span> syntax.css
+|   <span class="sb">`</span><span class="nt">--</span> favicon.ico
+<span class="sb">`</span><span class="nt">--</span> README.md
+</code></pre></div></div>
+
+<p>Here is a brief explanation of what you see:</p>
+
+<ul>
+  <li>When you run Jekyll, it creates a folder called _site with the static website inside it. Every file or folder in the repo will get copied into the _site folder unless it begins with an underscore.</li>
+  <li>_config.yml is the configuration file, which is the first file we are going to change.</li>
+  <li>index.html is your front page and about.md is a static page. You can add other static pages by creating markdown files (which we will be doing further). 404.html is pretty self-explanatory.</li>
+  <li>atom.xml is for the RSS reader.</li>
+  <li>_includes and _layouts folders contain the boilerplate HTML required to build the site.</li>
+  <li>_posts include the posts that you’ll be…well…posting. They are Markdown files.</li>
+  <li>public contains <a href="https://en.wikipedia.org/wiki/Favicon">favicon</a> information and CSS files.</li>
+</ul>
+
+<p>Still with me? Let’s do some tweaking! :)</p>
+
+<h2 id="4-modifying-configuration-file"><a name="config"></a>4. Modifying configuration file</h2>
+
+<p>The first thing you want to do is change the <code class="language-plaintext highlighter-rouge">_config.yml</code> file. Open it in your favorite text editor and edit the sections in <em>Setup</em>  and <em>About/contact</em> according to your preferences.</p>
+
+<p>You can add other details as well. Have a look at <a href="https://github.com/nikhita/nikhita.github.io/blob/master/_config.yml">my _config.yml</a> for reference.</p>
+
+<p>Lanyon is built on Poole and Poole does not support Jekyll 3 yet. You can check <a href="https://github.com/poole/lanyon/issues/124">this issue</a>. For this, you’ll need to add:</p>
+
+<figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">gems</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">jekyll-paginate</span><span class="pi">]</span>
+<span class="na">paginate_path</span><span class="pi">:</span> <span class="s2">"</span><span class="s">page:num"</span> </code></pre></figure>
+
+<p>and comment out: <code class="language-plaintext highlighter-rouge">relative_permalinks: true</code>.</p>
+
+<p>Now we are good to go!</p>
+
+<h2 id="5-adding-an-archive-page"><a name="archive"></a>5. Adding an archive page</h2>
+
+<p>Lanyon, by default, does not provide an archive page. So let’s make one. In your root folder, create an <code class="language-plaintext highlighter-rouge">archive.md</code> file and add the following contents to it.</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="o">---</span>
+<span class="ss">layout: </span><span class="n">page</span>
+<span class="ss">title: </span><span class="no">Archive</span>
+<span class="o">---</span>
+
+
+<span class="p">{</span><span class="sx">% for </span><span class="n">post</span> <span class="k">in</span> <span class="n">site</span><span class="p">.</span><span class="nf">posts</span> <span class="sx">%}
+  * {{ post.date | date_to_string }</span><span class="p">}</span> <span class="o">&amp;</span><span class="n">raquo</span><span class="p">;</span> <span class="p">[</span> <span class="p">{{</span> <span class="n">post</span><span class="p">.</span><span class="nf">title</span> <span class="p">}}</span> <span class="p">]({{</span> <span class="n">post</span><span class="p">.</span><span class="nf">url</span> <span class="p">}})</span>
+<span class="p">{</span><span class="sx">% endfor </span><span class="o">%</span><span class="p">}</span>
+
+</code></pre></div></div>
+
+<p>Now run the following commands again and go to http://localhost:4000 to see the Archive page on your website. Note that we’ll be making lots of changes so it’s a good idea to keep checking what changes you are making. So keep these commands in mind!</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>jekyll build
+<span class="nv">$ </span>jekyll serve
+</code></pre></div></div>
+
+<h2 id="6-integrating-disqus-comments"><a name="disqus"></a>6. Integrating Disqus comments</h2>
+
+<p>Obviously you’ll need a Disqus account for this. Head to the website, create an account and it’ll ask you if you want to “Add Disqus to your site”. If you already have an account, click on the gear icon on the top right corner and select the option. Follow the steps until it gives you a <em>shortname</em> for your website.</p>
+
+<p>Now open the <code class="language-plaintext highlighter-rouge">_layouts/default.html</code> file and add the line as shown:</p>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"container content"</span><span class="nt">&gt;</span>
+  
+  {{ content }}
+  {% include comments.html %}
+  
+<span class="nt">&lt;/div&gt;</span>
+</code></pre></div></div>
+
+<p>The parent <code class="language-plaintext highlighter-rouge">div</code>s are wider than the content container so adding the include statement outside of this one will make the comments section stretch across the entire page, rather than being confined to the content’s area.</p>
+
+<p>Now that you have included <code class="language-plaintext highlighter-rouge">comments.html</code>, let’s create it! Create a file called <code class="language-plaintext highlighter-rouge">comments.html</code> in the <code class="language-plaintext highlighter-rouge">_includes</code> folder and add the following lines. Make sure that you replace <em>your-shortname-here</em> with your actual shortname.</p>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+{% if page.comments %}
+<span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">"disqus_thread"</span><span class="nt">&gt;&lt;/div&gt;</span>
+<span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"text/javascript"</span><span class="nt">&gt;</span>
+    <span class="cm">/* * * CONFIGURATION VARIABLES * * */</span>
+    <span class="kd">var</span> <span class="nx">disqus_shortname</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">your-shortname-here</span><span class="dl">'</span><span class="p">;</span>
+    <span class="cm">/* change the above line to include your real shortname */</span>
+    <span class="kd">var</span> <span class="nx">disqus_identifier</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">{{ site.disqusid }}{{ page.url | replace:'index.html','' }}</span><span class="dl">"</span><span class="p">;</span>
+    
+    <span class="cm">/* * * DON'T EDIT BELOW THIS LINE * * */</span>
+    <span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+        <span class="kd">var</span> <span class="nx">dsq</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nf">createElement</span><span class="p">(</span><span class="dl">'</span><span class="s1">script</span><span class="dl">'</span><span class="p">);</span> <span class="nx">dsq</span><span class="p">.</span><span class="nx">type</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">text/javascript</span><span class="dl">'</span><span class="p">;</span> <span class="nx">dsq</span><span class="p">.</span><span class="k">async</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
+        <span class="nx">dsq</span><span class="p">.</span><span class="nx">src</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">//</span><span class="dl">'</span> <span class="o">+</span> <span class="nx">disqus_shortname</span> <span class="o">+</span> <span class="dl">'</span><span class="s1">.disqus.com/embed.js</span><span class="dl">'</span><span class="p">;</span>
+        <span class="p">(</span><span class="nb">document</span><span class="p">.</span><span class="nf">getElementsByTagName</span><span class="p">(</span><span class="dl">'</span><span class="s1">head</span><span class="dl">'</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="o">||</span> <span class="nb">document</span><span class="p">.</span><span class="nf">getElementsByTagName</span><span class="p">(</span><span class="dl">'</span><span class="s1">body</span><span class="dl">'</span><span class="p">)[</span><span class="mi">0</span><span class="p">]).</span><span class="nf">appendChild</span><span class="p">(</span><span class="nx">dsq</span><span class="p">);</span>
+    <span class="p">})();</span>
+<span class="nt">&lt;/script&gt;</span>
+<span class="nt">&lt;noscript&gt;</span>Please enable JavaScript to view the <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"https://disqus.com/?ref_noscript"</span> <span class="na">rel=</span><span class="s">"nofollow"</span><span class="nt">&gt;</span>comments powered by Disqus.<span class="nt">&lt;/a&gt;&lt;/noscript&gt;</span>
+{% endif %}
+
+</code></pre></div></div>
+
+<p>Note that the comments will not run if you don’t set <code class="language-plaintext highlighter-rouge">comments</code> to <code class="language-plaintext highlighter-rouge">true</code> in the YAML frontmatter of the posts. So open any post (say, <em>2014-01-02-introducing-lanyon.md</em>) from the _posts folder and add the following line on top:</p>
+
+<figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="nn">---</span>
+<span class="na">layout</span><span class="pi">:</span> <span class="s">post</span>
+<span class="na">title</span><span class="pi">:</span> <span class="s">Introducing Lanyon</span>
+<span class="na">comments</span><span class="pi">:</span> <span class="kc">true</span><span class="s"> /*add this line*/</span>
+<span class="nn">---</span></code></pre></figure>
+
+<p>Now run <code class="language-plaintext highlighter-rouge">jekyll build</code> and <code class="language-plaintext highlighter-rouge">jekyll serve</code> again to see Disqus comments enabled on the post! :)</p>
+
+<h2 id="7-enabling-google-analytics"><a name="ga"></a>7. Enabling Google Analytics</h2>
+
+<p>Again, you’ll need a GA account for this. In the Admin tab, you’ll find <em>Tracking info</em> under the <em>Property</em> section. Under that you’ll find a <em>tracking code</em> with a script. Something like this:</p>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="nt">&lt;script&gt;</span>
+  <span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">i</span><span class="p">,</span><span class="nx">s</span><span class="p">,</span><span class="nx">o</span><span class="p">,</span><span class="nx">g</span><span class="p">,</span><span class="nx">r</span><span class="p">,</span><span class="nx">a</span><span class="p">,</span><span class="nx">m</span><span class="p">){</span><span class="nx">i</span><span class="p">[</span><span class="dl">'</span><span class="s1">GoogleAnalyticsObject</span><span class="dl">'</span><span class="p">]</span><span class="o">=</span><span class="nx">r</span><span class="p">;</span><span class="nx">i</span><span class="p">[</span><span class="nx">r</span><span class="p">]</span><span class="o">=</span><span class="nx">i</span><span class="p">[</span><span class="nx">r</span><span class="p">]</span><span class="o">||</span><span class="kd">function</span><span class="p">(){</span>
+  <span class="p">(</span><span class="nx">i</span><span class="p">[</span><span class="nx">r</span><span class="p">].</span><span class="nx">q</span><span class="o">=</span><span class="nx">i</span><span class="p">[</span><span class="nx">r</span><span class="p">].</span><span class="nx">q</span><span class="o">||</span><span class="p">[]).</span><span class="nf">push</span><span class="p">(</span><span class="nx">arguments</span><span class="p">)},</span><span class="nx">i</span><span class="p">[</span><span class="nx">r</span><span class="p">].</span><span class="nx">l</span><span class="o">=</span><span class="mi">1</span><span class="o">*</span><span class="k">new</span> <span class="nc">Date</span><span class="p">();</span><span class="nx">a</span><span class="o">=</span><span class="nx">s</span><span class="p">.</span><span class="nf">createElement</span><span class="p">(</span><span class="nx">o</span><span class="p">),</span>
+  <span class="nx">m</span><span class="o">=</span><span class="nx">s</span><span class="p">.</span><span class="nf">getElementsByTagName</span><span class="p">(</span><span class="nx">o</span><span class="p">)[</span><span class="mi">0</span><span class="p">];</span><span class="nx">a</span><span class="p">.</span><span class="k">async</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span><span class="nx">a</span><span class="p">.</span><span class="nx">src</span><span class="o">=</span><span class="nx">g</span><span class="p">;</span><span class="nx">m</span><span class="p">.</span><span class="nx">parentNode</span><span class="p">.</span><span class="nf">insertBefore</span><span class="p">(</span><span class="nx">a</span><span class="p">,</span><span class="nx">m</span><span class="p">)</span>
+  <span class="p">})(</span><span class="nb">window</span><span class="p">,</span><span class="nb">document</span><span class="p">,</span><span class="dl">'</span><span class="s1">script</span><span class="dl">'</span><span class="p">,</span><span class="dl">'</span><span class="s1">https://www.google-analytics.com/analytics.js</span><span class="dl">'</span><span class="p">,</span><span class="dl">'</span><span class="s1">ga</span><span class="dl">'</span><span class="p">);</span>
+
+  <span class="nf">ga</span><span class="p">(</span><span class="dl">'</span><span class="s1">create</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">UA-82647777-1</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">auto</span><span class="dl">'</span><span class="p">);</span>
+  <span class="nf">ga</span><span class="p">(</span><span class="dl">'</span><span class="s1">send</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">pageview</span><span class="dl">'</span><span class="p">);</span>
+
+<span class="nt">&lt;/script&gt;</span>
+
+</code></pre></div></div>
+
+<p>Create a file called <code class="language-plaintext highlighter-rouge">google_analytics.html</code> in the <code class="language-plaintext highlighter-rouge">_includes</code> folder and add the the code GA gave you. Do not paste the code I posted above - you’ll mess up my stats! :(</p>
+
+<p>Now add the following line in <code class="language-plaintext highlighter-rouge">default.html</code> inside the <code class="language-plaintext highlighter-rouge">_layouts</code> folder.</p>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+  <span class="nt">&lt;body&gt;</span>
+    {% include google_analytics.html %} /*add this line*/
+    {% include sidebar.html %}
+
+</code></pre></div></div>
+
+<p>Save it and you are good to go!</p>
+
+<h2 id="8-adding-a-custom-favicon"><a name="favicon"></a>8. Adding a custom favicon</h2>
+
+<p>You can create a <a href="https://en.wikipedia.org/wiki/Favicon">favicon</a> using GIMP or you can use an easy online <a href="http://faviconit.com/en">option</a>. I rolled the online way.</p>
+
+<p>If you plan to use the online method, extract the files to the <code class="language-plaintext highlighter-rouge">public</code> folder (which should have a placeholder <code class="language-plaintext highlighter-rouge">favicon.ico</code>).</p>
+
+<p>Go to <code class="language-plaintext highlighter-rouge">head.html</code> in _includes and add the following line:</p>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">&lt;!-- Icons --&gt;</span>
+<span class="nt">&lt;link</span> <span class="na">rel=</span><span class="s">"icon"</span> <span class="na">sizes=</span><span class="s">"16x16 32x32 64x64"</span> <span class="na">href=</span><span class="s">"/blogs/public/favicon.ico"</span><span class="nt">&gt;</span>
+</code></pre></div></div>
+
+<p>Note: If you used the link that I provided, you’ll have many other images. Have a look at the readme file provided after extraction and change the href link to include <code class="language-plaintext highlighter-rouge">{{ site.baseurl }}/public/</code>. Look at my <a href="https://github.com/nikhita/nikhita.github.io/blob/master/_includes/head.html">head.html</a> to understand it better.</p>
+
+<p>Cool, now we have got our custom favicon in action!</p>
+
+<h2 id="9-adding-your-photo-to-the-sidebar"><a name="photo"></a>9. Adding your photo to the sidebar</h2>
+
+<p>We’ll use <a href="http://en.gravatar.com/">Gravatar</a> for this. Go to the website, create an account and upload your image. According to the instructions <a href="http://en.gravatar.com/site/implement/hash/">here</a>, you’ll need the md5 hash. For this, you’ll need to type a php command. Go <a href="http://phpfiddle.org/">here</a> and run:</p>
+
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">echo</span> <span class="nb">md5</span><span class="p">(</span><span class="nb">strtolower</span><span class="p">(</span><span class="nb">trim</span><span class="p">(</span><span class="s2">"MyEmailAddress@example.com"</span><span class="p">)));</span>
+</code></pre></div></div>
+
+<p>You’ll get a md5 hash. Copy the hash and add it in your _config.yml file as shown:</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#About/contact</span>
+
+<span class="na">gravatar_md5</span><span class="pi">:</span> <span class="s">your-md5-hash-here</span>
+</code></pre></div></div>
+
+<p>Then open your sidebar.html file and add this line:</p>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"sidebar"</span> <span class="na">id=</span><span class="s">"sidebar"</span><span class="nt">&gt;</span>
+
+/*add the following lines*/
+ <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"sidebar-logo"</span> <span class="na">style=</span><span class="s">"align:center"</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;img</span> <span class="na">src=</span><span class="s">"http://www.gravatar.com/avatar/?s=120"</span> <span class="nt">/&gt;</span>
+  <span class="nt">&lt;/div&gt;</span>
+</code></pre></div></div>
+
+<p>To make your photo look good on the sidebar, create a <code class="language-plaintext highlighter-rouge">custom.css</code> file in <code class="language-plaintext highlighter-rouge">public/css</code> and add the following lines:</p>
+
+<div class="language-css highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nc">.sidebar-logo</span> <span class="p">{</span>
+      <span class="nl">padding</span><span class="p">:</span> <span class="m">1.5rem</span><span class="p">;</span>
+<span class="p">}</span>
+  
+<span class="nc">.sidebar-logo</span> <span class="nt">img</span> <span class="p">{</span>
+      <span class="nl">border-radius</span><span class="p">:</span> <span class="m">50%</span><span class="p">;</span>
+      <span class="nl">-moz-border-radius</span><span class="p">:</span> <span class="m">50%</span><span class="p">;</span>
+      <span class="nl">-webkit-border-radius</span><span class="p">:</span> <span class="m">50%</span><span class="p">;</span>
+      <span class="nl">width</span><span class="p">:</span> <span class="m">160px</span><span class="p">;</span>
+      <span class="nl">margin</span><span class="p">:</span> <span class="m">0</span> <span class="nb">auto</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Save it, run your server and look at your pretty picture on the sidebar! :)</p>
+
+<h2 id="10-adding-social-media-buttons"><a name="social-media"></a>10. Adding social media buttons</h2>
+
+<p>I have used icons from the <a href="http://fontawesome.io/">Font Awesome</a> library. If you don’t like the icons I used, you can choose other icons of your own - after all, it’s your website!</p>
+
+<p>Add the following line with other CSS links in <code class="language-plaintext highlighter-rouge">_includes/head.html</code>:</p>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;link</span> <span class="na">rel=</span><span class="s">"stylesheet"</span> <span class="na">href=</span><span class="s">"//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"</span><span class="nt">&gt;</span>
+</code></pre></div></div>
+
+<p>In your <code class="language-plaintext highlighter-rouge">sidebar.html</code> setup a div container for all these icons to go in:</p>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">"contact-list"</span> <span class="na">style=</span><span class="s">"text-align:center"</span><span class="nt">&gt;</span>
+<span class="c">&lt;!-- contact icons go here --&gt;</span> 
+<span class="nt">&lt;/div&gt;</span>
+</code></pre></div></div>
+
+<p>You can link multiple social media accounts in the div. For example, if you want to link your LinkedIn account, add the following lines:</p>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+</code></pre></div></div>
+
+<p>For email, <code class="language-plaintext highlighter-rouge">href="mailto: "</code> and for rss, <code class="language-plaintext highlighter-rouge">href="{{ site.url }}/atom.xml"</code>.</p>
+
+<p>Awesome, our social media buttons are ready for action!</p>
+
+<h2 id="11-changing-the-font"><a name="font"></a>11. Changing the font</h2>
+
+<p>Personally, I didn’t like the default Lanyon font. Head over to <a href="https://fonts.google.com/?authuser=1">Google Fonts</a> and choose a font that you love. Google will provide you with a stylesheet link. Something like this:</p>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;link</span> <span class="na">href=</span><span class="s">"https://fonts.googleapis.com/css?family=Average"</span> <span class="na">rel=</span><span class="s">"stylesheet"</span><span class="nt">&gt;</span> 
+</code></pre></div></div>
+
+<p>Add this line to <code class="language-plaintext highlighter-rouge">head.html</code> in the list of CSS links. Now, go to <code class="language-plaintext highlighter-rouge">public/css/lanyon.css</code> and your font to the <code class="language-plaintext highlighter-rouge">font-family</code>.</p>
+
+<div class="language-css highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">/* I added the Average font here */</span>
+<span class="nt">html</span> <span class="p">{</span>
+  <span class="nl">font-family</span><span class="p">:</span> <span class="s1">"Average"</span><span class="p">,</span> <span class="s1">"PT Serif"</span><span class="p">,</span> <span class="n">Georgia</span><span class="p">,</span> <span class="s1">"Times New Roman"</span><span class="p">,</span> <span class="nb">serif</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Finally, you have even changed your fonts! Yay!</p>
+
+<h2 id="12-other-tips"><a name="other-tips"></a>12. Other tips</h2>
+
+<p>Some hacks to make your blogging experience better:</p>
+
+<ul>
+  <li>Set up a <code class="language-plaintext highlighter-rouge">_drafts</code> folder in your root directory. Save the posts without the date, eg: <code class="language-plaintext highlighter-rouge">title-without-date.md</code>. In order to preview this, run</li>
+</ul>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>jekyll serve <span class="nt">--drafts</span>
+</code></pre></div></div>
+
+<ul>
+  <li>For adding images to your site, you can setup an <code class="language-plaintext highlighter-rouge">images</code> folder and use the images with <code class="language-plaintext highlighter-rouge">&lt;img src="{{ site.baseurl }}/images/file-name-here"&gt;</code>.</li>
+</ul>
+
+<h2 id="13-conclusion"><a name="conclusion"></a>13. Conclusion</h2>
+
+<h3 id="references">References</h3>
+
+<ul>
+  <li><a href="http://joshualande.com/jekyll-github-pages-poole">Joshua Lande’s post</a></li>
+  <li><a href="http://kylestratis.com/2015/04/17/blog-setup/">Kyle Stratis’s post</a></li>
+  <li><a href="http://patricksteadman.ca/2014/08/04/lanyonsetup/">Patrick Steadman’s post</a></li>
+</ul>
+
+<h3 id="closing-notes">Closing notes</h3>
+
+<p>Finally, the closing note! If you have any queries or constructive criticism, leave it out in the comments or feel free to email me at: nikitaraghunath@gmail.com</p>
+
+<p>Hope this blog post helps you! :)</p>
+
+</article>
+
+
+
+<section class="rss">
+  <p class="rss-subscribe text"><strong>Subscribe <a href="/blogs/feed.xml">via RSS</a></strong></p>
+</section>
+
+<section class="share">
+  <span>Share: </span>
+  
+    
+    
+      <a href="//twitter.com/share?text=How+to+build+a+blog+using+Github%2C+Jekyll+and+Lanyon&url=https%3A%2F%2Frisyandi.com%2Fblogs%2Fblogs%2Fbuild-blog-using-github-jekyll&via=Risyandi94"
+        onclick="window.open(this.href, 'twitter-share', 'width=550,height=255');return false;">
+        <i class="fa fa-twitter-square fa-lg"></i>
+      </a>
+    
+    
+    
+    
+    
+    
+    
+  
+    
+    
+    
+    
+    
+    
+    
+    
+  
+    
+    
+    
+    
+    
+    
+    
+    
+  
+    
+    
+    
+    
+    
+      <a href="//www.linkedin.com/shareArticle?mini=true&url=https%3A%2F%2Frisyandi.com%2Fblogs%2Fblogs%2Fbuild-blog-using-github-jekyll"
+        onclick="window.open(this.href, 'linkedin-share', 'width=550,height=255');return false;">
+        <i class="fa fa-linkedin-square fa-lg"></i>
+      </a>
+    
+    
+    
+    
+  
+    
+    
+    
+    
+    
+    
+    
+    
+  
+    
+    
+    
+    
+    
+    
+    
+    
+  
+    
+    
+    
+    
+    
+    
+    
+    
+  
+    
+    
+    
+    
+    
+    
+    
+    
+  
+    
+    
+    
+    
+    
+    
+    
+    
+  
+    
+    
+    
+    
+    
+    
+    
+    
+  
+    
+    
+    
+    
+    
+    
+    
+    
+  
+    
+    
+    
+    
+    
+    
+    
+    
+  
+    
+    
+    
+    
+    
+    
+    
+    
+  
+    
+    
+    
+    
+    
+    
+    
+    
+  
+    
+    
+    
+    
+    
+    
+    
+    
+  
+</section>
+
+  <section class="post-navigation">
+    <span class="prev-post">
+      
+    </span>
+    <span class="next-post">
+      
+        <a href="/blogs/seo-jekyll">
+          <span class="page-number">SEO for Jekyll blogs</span>
+          <span class="fa-stack fa-lg">
+            <i class="fa fa-square fa-stack-2x"></i>
+            <i class="fa fa-angle-double-right fa-stack-1x fa-inverse"></i>
+          </span>
+        </a>
+      
+    </span>
+  </section>
+
+
+
+
+<section class="disqus">
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+    var disqus_shortname = 'risyandi';
+    console.log(disqus_shortname, ":short-name");
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</section>
+
+
+
+</div>
+</div>
+
+    </div>
+
+    <footer class="site-footer">
+
+  <div class="wrapper">
+    <div class="site-navigation">
+
+      <p><strong>Site Map</strong></p>
+      <ul class="pages">
+        
+        
+        <li class="nav-link"><a href="/blogs/about/">About</a>
+          
+          
+        
+        <li class="nav-link"><a href="/blogs/archive/">Archive</a>
+          
+          
+        
+          
+        
+          
+        
+          
+        
+        <li class="nav-link"><a href="/blogs/talks/">Talks</a>
+          
+          
+        
+          
+        
+          
+        
+          
+        
+          
+      </ul>
+    </div>
+
+    <div class="site-contact">
+
+      <p><strong>Contact</strong></p>
+      <ul class="social-media-list">
+        <li>
+          <a href="mailto:Risyandi.94@gmail.com">
+            <i class="fa fa-envelope-o"></i>
+            <span class="username">Email</span>
+          </a>
+        </li>
+
+        
+        
+        <li>
+          <a href="https://twitter.com/Risyandi94" title="Follow me on Twitter" target="_blank">
+            <i class="fa fa-twitter"></i>
+            <span class="username">Twitter</span>
+          </a>
+        </li>
+        
+        
+        
+        <li>
+          <a href="https://quora.com/profile/Risyandi" title="Follow me on Quora" target="_blank">
+            <i class="fa fa-quora"></i>
+            <span class="username">Quora</span>
+          </a>
+        </li>
+        
+        
+        
+        <li>
+          <a href="https://github.com/risyandi" title="Fork me on GitHub" target="_blank">
+            <i class="fa fa-github"></i>
+            <span class="username">GitHub</span>
+          </a>
+        </li>
+        
+        
+        
+        <li>
+          <a href="https://linkedin.com/in/risyandi94" title="Connect with me on LinkedIn" target="_blank">
+            <i class="fa fa-linkedin"></i>
+            <span class="username">LinkedIn</span>
+          </a>
+        </li>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+      </ul>
+    </div>
+
+    <div class="site-signature">
+      <p class="rss-subscribe text"><strong>Subscribe <a href="/blogs/feed.xml">via RSS <i
+              class="fa fa-rss"></i></a></strong></p>
+      <p class="text">A personal blogs I write about technical things, Advertising Technologies, Data Scientist, Design, and Ecosystem Digital Startup in Indonesia.
+</p>
+    </div>
+
+  </div>
+
+</footer>
+
+<!-- Scripts -->
+<script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.5/highlight.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/lightbox2/2.7.1/js/lightbox.min.js"></script>
+<script id="dsq-count-scr" src="//risyandi.disqus.com/count.js" async></script>
+<script>
+
+  $(document).ready(function () {
+
+    // Syntax highlighting
+    hljs.initHighlightingOnLoad();
+
+    // Header
+    var menuToggle = $('#js-mobile-menu').unbind();
+    $('#js-navigation-menu').removeClass("show");
+    menuToggle.on('click', function (e) {
+      e.preventDefault();
+      $('#js-navigation-menu').slideToggle(function () {
+        if ($('#js-navigation-menu').is(':hidden')) {
+          $('#js-navigation-menu').removeAttr('style');
+        }
+      });
+    });
+
+    //Make sure all the post's links open in a new tab
+    jQuery('.post-content a, .post-excerpt a').not('.footnote, .reversefootnote').attr('target', '_blank');
+
+  });
+
+</script>
+
+
+
+  </body>
+
+</html>

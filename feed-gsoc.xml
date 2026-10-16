@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Risyandi</title>
+    <description>A personal blogs I write about technical things, Advertising Technologies, Data Scientist, Design, and Ecosystem Digital Startup in Indonesia.
+</description>
+    <link>https://risyandi.com/blogs/blogs/</link>
+    <atom:link href="https://risyandi.com/blogs/blogs/feed-gsoc.xml" rel="self" type="application/rss+xml"/>
+    <pubDate>Fri, 16 Oct 2026 10:35:28 +0000</pubDate>
+    <lastBuildDate>Fri, 16 Oct 2026 10:35:28 +0000</lastBuildDate>
+    <generator>Jekyll v4.4.1</generator>
+    
+      <item>
+        <title>GSoC with Kubernetes - Week 2 and 3</title>
+        <description>&lt;p&gt;This is an update of Week 2 and 3 for my Google Summer of Code project with Kubernetes (Cloud Native Computing Foundation). I ended up coding a lot more, talking to other community members and having even more fun. :smile:&lt;/p&gt;
+
+&lt;h2 id=&quot;the-code-part&quot;&gt;The Code Part&lt;/h2&gt;
+
+&lt;p&gt;I mainly wrote a lot of integration tests and fixed bugs along the way for CRDs. Code freeze is up on June 1 so I’d like to get all integration tests by then (only a couple remaining!). So CRDs should be perfectly polished and ready by 1.7.&lt;/p&gt;
+
+&lt;p&gt;I also collated ideas related to the proposal and added a validation schema for Pod - will be working on the proposal more in the next week (after the code freeze).&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Added the following integration tests:
+    &lt;ul&gt;
+      &lt;li&gt;test for no namespace rejection&lt;/li&gt;
+      &lt;li&gt;test for creating resources with same name and different namespace&lt;/li&gt;
+      &lt;li&gt;test for checking if integers are preserved while decoding (originally a TPR regression)&lt;/li&gt;
+      &lt;li&gt;test for self link of cluster scoped resources&lt;/li&gt;
+      &lt;li&gt;test for name conflicts&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Created some more PRs/issues:
+    &lt;ul&gt;
+      &lt;li&gt;Add plural name for CustomResources example in &lt;a href=&quot;https://github.com/kubernetes/kubernetes/pull/45793&quot;&gt;#45793&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;Fixed the controller doc in &lt;a href=&quot;https://github.com/kubernetes/community/pull/621&quot;&gt;#621&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;Created an &lt;a href=&quot;https://github.com/kubernetes/test-infra/issues/2787&quot;&gt;issue&lt;/a&gt; on &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;kubernetes/test-infra&lt;/code&gt; for a flake that was hitting all PRs. See &lt;a href=&quot;https://github.com/kubernetes/kubernetes/issues/45978&quot;&gt;this&lt;/a&gt; issue for further discussion.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;the-tale-of-crd-deletion&quot;&gt;The Tale of CRD Deletion:&lt;/h2&gt;
+&lt;p&gt;While writing the test for name conflicts, I hit a lot of bugs and it was interesting solving them!&lt;/p&gt;
+
+&lt;p&gt;It initially caused a panic (&lt;a href=&quot;https://gist.github.com/nikhita/345c3629fc4a942b7c9ee5275dfeb74b&quot;&gt;stack trace&lt;/a&gt;). This occurred because now we deleted from storage instead of the client (after this &lt;a href=&quot;https://github.com/kubernetes/kubernetes/pull/46296&quot;&gt;PR&lt;/a&gt;). This was racing the storage and causing a nil dereference. PR with fix: &lt;a href=&quot;https://github.com/kubernetes/kubernetes/pull/46430&quot;&gt;#46430&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Did a rebase again but still did not work! Now I got:  &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;&quot;reason&quot;: &quot;InstanceDeletionFailed&quot;&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;&quot;message&quot;: &quot;could not list instances: unable to find a custom resource client for noxus.mygroup.example.com&quot;&lt;/code&gt;. The problem turned out to be that the storage map was only filled if a CR (not the CRD!) was accessed via some CRUD request. So this worked only if you created CRs before the CRD deletion. PR with fix: &lt;a href=&quot;https://github.com/kubernetes/kubernetes/pull/46501&quot;&gt;#46501&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Also fixed the naming controller so that when a resource is deleted, other resources in the same group are added to the queue. This is necessary since the deleted CRD can free names. Added a &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;requeueAllOtherGroupCRDs&lt;/code&gt; function for the above. Had a little trouble making the synchronization was right. I was using &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;time.Sleep&lt;/code&gt; before which looked very wrong. Tried polling later, then thought that polling was in fact not needed at all! Finally added in the right place (in &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;apierrors.NotFound(err)&lt;/code&gt;) and got it working! :boom:&lt;/p&gt;
+
+&lt;h2 id=&quot;the-community-bonding-part&quot;&gt;The Community Bonding Part&lt;/h2&gt;
+
+&lt;p&gt;I talked to David (who is working on CRDs a lot) about the project/CRDs and he was very helpful! I had not spoked to him before so this was a nice community bonding exercise.&lt;/p&gt;
+
+&lt;p&gt;I also helped a few folks on Slack and answered their questions. Lots of people reached out to be in these two weeks asking me how they could contribute to Kubernetes. It was exciting seeing the sudden interest! I think most of them faced the issue of not being able to find a beginner-friendly task. I pointed them to a few easy issues but hope to come up with a solution to that!&lt;/p&gt;
+
+&lt;p&gt;I even did my first small code review. That felt great because I never thought I could ever be so confident about a codebase to do a review of others’ code. :grinning:&lt;/p&gt;
+
+&lt;h2 id=&quot;conclusion&quot;&gt;Conclusion&lt;/h2&gt;
+
+&lt;p&gt;I am really enjoying working with the Kubernetes community. Everyone is very friendly and I look forward to Mondays now (yes, you read that right!). In other news, I got a scholarship from WomenWhoGo and GoBridge to attend GopherCon at Denver. Looking forward to meeting people I have been interacting with online and making new friends! :)&lt;/p&gt;
+
+&lt;p&gt;PS: Had some Twitter fun this week -&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;div align=&quot;center&quot;&gt;
+&lt;blockquote class=&quot;twitter-tweet&quot; data-lang=&quot;en&quot;&gt;&lt;p lang=&quot;en&quot; dir=&quot;ltr&quot;&gt;&lt;a href=&quot;https://twitter.com/TheNikhita&quot;&gt;@TheNikhita&lt;/a&gt; Thanks for your work so far &lt;a href=&quot;https://twitter.com/TheNikhita&quot;&gt;@TheNikhita&lt;/a&gt;! You fixed a bug that we hit in Kubernetes and is getting backported to the next 1.6.x branch 👍👍👍&lt;/p&gt;&amp;mdash; Brandon Philips (@BrandonPhilips) &lt;a href=&quot;https://twitter.com/BrandonPhilips/status/867820077063602176&quot;&gt;May 25, 2017&lt;/a&gt;&lt;/blockquote&gt;
+&lt;script async=&quot;&quot; src=&quot;//platform.twitter.com/widgets.js&quot; charset=&quot;utf-8&quot;&gt;&lt;/script&gt;
+&lt;br /&gt;
+&lt;blockquote class=&quot;twitter-tweet&quot; data-lang=&quot;en&quot;&gt;&lt;p lang=&quot;en&quot; dir=&quot;ltr&quot;&gt;Love seeing &lt;a href=&quot;https://twitter.com/hashtag/gsoc?src=hash&quot;&gt;#gsoc&lt;/a&gt; interns making impact in &lt;a href=&quot;https://twitter.com/kubernetesio&quot;&gt;@kubernetesio&lt;/a&gt; &lt;a href=&quot;https://t.co/zSPxOZIZx7&quot;&gt;https://t.co/zSPxOZIZx7&lt;/a&gt; &lt;a href=&quot;https://t.co/rj9ooTHFOo&quot;&gt;https://t.co/rj9ooTHFOo&lt;/a&gt;&lt;/p&gt;&amp;mdash; Brandon Philips (@BrandonPhilips) &lt;a href=&quot;https://twitter.com/BrandonPhilips/status/867821071872909312&quot;&gt;May 25, 2017&lt;/a&gt;&lt;/blockquote&gt;
+&lt;script async=&quot;&quot; src=&quot;//platform.twitter.com/widgets.js&quot; charset=&quot;utf-8&quot;&gt;&lt;/script&gt;
+&lt;/div&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+</description>
+        <pubDate>Mon, 29 May 2017 00:00:00 +0000</pubDate>
+        <link>https://risyandi.com/blogs/blogs/google-summer-of-code-kubernetes-week2-3-community-bonding</link>
+        <guid isPermaLink="true">https://risyandi.com/blogs/blogs/google-summer-of-code-kubernetes-week2-3-community-bonding</guid>
+	<category term="gsoc"/>
+        
+        
+      </item>
+    
+      <item>
+        <title>GSoC with Kubernetes - Week 1</title>
+        <description>&lt;h1 id=&quot;getting-in&quot;&gt;Getting in&lt;/h1&gt;
+
+&lt;p&gt;In my last &lt;a href=&quot;https://nikhita.github.io/experience-gophercon-india&quot;&gt;post&lt;/a&gt;, I mentioned about speaking at GopherCon India. It was a surreal experience and it introduced me to Kubernetes. I was aware of Kubernetes before (having used Docker) but didn’t really take the leap to contributing to it. Attending the conference made me go “Damn, this sounds so cool. I am definitely looking at the contributing guide after I get back home!”.&lt;/p&gt;
+
+&lt;p&gt;Luckily, the day I got back home was the day when organizations for Google Summer of Code were announced. I was &lt;strong&gt;beyond enthralled&lt;/strong&gt; to see &lt;a href=&quot;https://github.com/cncf/soc&quot;&gt;CNCF&lt;/a&gt; on the list and started reading the documentation for Kubernetes right away. It took me about a week to get comfortable with k8s and the project, set up my development environment and understand the codebase. I solved a few issues for the pre-GSoC involvement, discussed and got my proposal reviewed from my mentor.&lt;/p&gt;
+
+&lt;p&gt;After a month long wait, contributions and exams, I finally got the result that I had been selected for Google Summer of Code this year! Last winter, I had applied for &lt;a href=&quot;https://wiki.gnome.org/Outreachy&quot;&gt;Outreachy&lt;/a&gt; and was going to be selected but couldn’t join later due to timeline restrictions (Outreachy needed two months of winter vacations while I had just one month free). I was bummed to hear that and my thirst to get into GSoC strengthed even more. Receiving the GSoC result was one of the best moments of my life!   :smile:&lt;/p&gt;
+
+&lt;h1 id=&quot;my-project&quot;&gt;My project&lt;/h1&gt;
+
+&lt;p&gt;Kubernetes comes with many built-in API objects. However, it also offers you the feature to extend the Kubernetes API using Third Party Resources (TPRs). TPRs are a very exciting and crucial part of Kubernetes since it offers one to create their own custom objects. You can think of TPRs as being much like the schema for a database table. Once you have created the table, you can then start storing rows in the table. Once created, TPRs can act as the data model behind custom controllers or automation programs.&lt;/p&gt;
+
+&lt;p&gt;The implementation to allow the creation of TPRs is present but the implementation has languished. There are multiple problems associated with it and one of my goals this summer is to work on these problems to drive them stable and to shower some love at TPRs! One of the main features I will be working on is implementing validation. If time permits, other features will also be added. You can read about the current situation of Third Party Resources &lt;a href=&quot;https://github.com/kubernetes/features/issues/95&quot;&gt;here&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h1 id=&quot;the-community&quot;&gt;The Community&lt;/h1&gt;
+
+&lt;p&gt;Google lets students get comfortable with the community, their projects and the development environment initially. The student is not required to code right away. This period is to allow students to refine their project ideas so they can code without any hassle during the coding period. Hence, this period is called the Community Bonding Period. I really liked this approach. :heart:&lt;/p&gt;
+
+&lt;p&gt;My first week has been absolutely amazing! I had the &lt;strong&gt;best&lt;/strong&gt; time working with my mentor - &lt;a href=&quot;https://github.com/sttts&quot;&gt;Dr. Stefan Schimanski&lt;/a&gt;. Even when I did not know something, he explained with utmost patience without making me feel bad about not knowing it. Meanwhile, I was also encouraged to ask questions without hesitation. This gives a HUGE boost to us mentees while communicating with mentors. I am deeply thankful for his help.&lt;/p&gt;
+
+&lt;p&gt;My experience interacting with other community members has been positive too. I tweeted about my gsoc selection and was overwhelmed to recieve such a warm welcome from the community! Even while interacting on slack and github, everyone has been very friendly. The environment is very pleasant and I am having great fun working with such an awesome community! Kubernetes takes the cake for being the friendliest open source community ever!&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;div align=&quot;center&quot;&gt;
+&lt;blockquote class=&quot;twitter-tweet&quot; data-lang=&quot;en&quot;&gt;&lt;p lang=&quot;en&quot; dir=&quot;ltr&quot;&gt;Excited to work on &lt;a href=&quot;https://twitter.com/kubernetesio&quot;&gt;@kubernetesio&lt;/a&gt; as my &lt;a href=&quot;https://twitter.com/gsoc&quot;&gt;@gsoc&lt;/a&gt; project! 🎉 &lt;a href=&quot;https://t.co/pir10SzTZe&quot;&gt;https://t.co/pir10SzTZe&lt;/a&gt;&lt;/p&gt;&amp;mdash; Nikhita Raghunath (@TheNikhita) &lt;a href=&quot;https://twitter.com/TheNikhita/status/860238784205606912&quot;&gt;May 4, 2017&lt;/a&gt;&lt;/blockquote&gt;
+&lt;script async=&quot;&quot; src=&quot;//platform.twitter.com/widgets.js&quot; charset=&quot;utf-8&quot;&gt;&lt;/script&gt;
+&lt;/div&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;The CNCF community has been very engaging and hospitable too. After the selection, CNCF released a &lt;a href=&quot;https://www.cncf.io/blog/2017/05/04/cncf-brings-kubernetes-coredns-opentracing-prometheus-google-summer-code-2017/&quot;&gt;blog post&lt;/a&gt; on their website mentioning about us GSoC students and they were very friendly over email and slack as well. I feel very lucky to be part of CNCF. :)&lt;/p&gt;
+
+&lt;h1 id=&quot;the-work&quot;&gt;The Work&lt;/h1&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;One of the main features I will be implementing for TPRs is validation. This week I started out with comparing two go json schema libraries that we could use for validation. I wrote benchmarks for the same and chose one of them after analyzing their strengths and weaknesses.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;I will soon be publishing a design proposal for validation. I researched a bit more about it, made notes and wrote down tricky questions that the project could face. There are still some open questions and I will be addressing them and coming up with the draft proposal next week.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;a href=&quot;https://github.com/deads2k&quot;&gt;David&lt;/a&gt; had been working on creating a stable base for TPRs (now it will probably be called Custom Resources). He even wrote a nice step-by-step approach on setting up the new kube-apiextensions-server which I transformed into a bash &lt;a href=&quot;https://github.com/nikhita/gsoc-meta-k8s/blob/master/notes/set-kube-apiextensions-server.sh&quot;&gt;script&lt;/a&gt; for easy access. ;)&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;I began tinkering around with the new TPR code and started out writing integration tests for the same. The pull request can be seen &lt;a href=&quot;https://github.com/kubernetes/kubernetes/pull/45721&quot;&gt;here&lt;/a&gt; and the list of integration tests can be seen &lt;a href=&quot;https://github.com/kubernetes/kubernetes/issues/45511&quot;&gt;here&lt;/a&gt;. I plan to add more integration tests, solve issues and help out with &lt;a href=&quot;https://github.com/kubernetes/kubernetes/issues/45728&quot;&gt;migration&lt;/a&gt; in the coming weeks.&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;I have been maintaining a google doc with daily updates which serves as a neat log of what I am working on. A major benefit is that I can take a step back and see the overall progress of my project. I have collated everything related to my GSoC project in one &lt;a href=&quot;https://github.com/nikhita/gsoc-meta-k8s&quot;&gt;meta repository&lt;/a&gt; on Github. If you are interested in knowing more about this project, please visit the repo for a better perspective on it. :)&lt;/p&gt;
+
+&lt;h1 id=&quot;conclusion&quot;&gt;Conclusion&lt;/h1&gt;
+
+&lt;p&gt;I don’t intend to write such long blog posts about my weekly progress in the future (I will definitely write, but they will be short and sweet). These blog posts provide a rather detailed and personal overview of my experience. Instead if you are interested in knowing only about the progress, you can visit the repo to get summarized weekly reports!&lt;/p&gt;
+
+&lt;p&gt;When I started out with Kubernetes, I faced a lot of trouble getting a hang out of it. In the coming weeks, I also plan on writing a few blog posts for beginners. I believe that being a newbie myself, I can offer a better and a fresher perspective. So come back after a few weeks to read more!&lt;/p&gt;
+
+&lt;p&gt;I am having immense fun working with the Kubernetes team and I plan on contributing more and continuing to have more fun over the summer! :tada:&lt;/p&gt;
+
+</description>
+        <pubDate>Sun, 14 May 2017 00:00:00 +0000</pubDate>
+        <link>https://risyandi.com/blogs/blogs/google-summer-of-code-kubernetes-week-1</link>
+        <guid isPermaLink="true">https://risyandi.com/blogs/blogs/google-summer-of-code-kubernetes-week-1</guid>
+	<category term="gsoc"/>
+        
+        
+      </item>
+    
+  </channel>
+</rss>

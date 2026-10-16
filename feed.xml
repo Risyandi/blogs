@@ -1,0 +1,858 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Risyandi</title>
+    <description>A personal blogs I write about technical things, Advertising Technologies, Data Scientist, Design, and Ecosystem Digital Startup in Indonesia.
+</description>
+    <link>https://risyandi.com/blogs/blogs/</link>
+    <atom:link href="https://risyandi.com/blogs/blogs/feed.xml" rel="self" type="application/rss+xml"/>
+    <pubDate>Fri, 16 Oct 2026 10:35:28 +0000</pubDate>
+    <lastBuildDate>Fri, 16 Oct 2026 10:35:28 +0000</lastBuildDate>
+    <generator>Jekyll v4.4.1</generator>
+    
+      <item>
+        <title>Installing Go from source</title>
+        <description>&lt;p&gt;I wanted to contribute to the Go source (the programming language itself) but that meant I needed to have two go versions on my machine - the one I am using currently (1.8.1) and the HEAD. This is a post explaining how to achieve that. Please note that I am on Linux and I am &lt;em&gt;not&lt;/em&gt; using gvm for installing Go.&lt;/p&gt;
+
+&lt;h2 id=&quot;get-the-source-code&quot;&gt;Get the source code&lt;/h2&gt;
+
+&lt;p&gt;You need to get the Go source code first, of course. The Go team has excellent instructions &lt;a href=&quot;https://golang.org/doc/contribute.html&quot;&gt;here&lt;/a&gt;. Essentially you need to checkout the source repo anywhere &lt;strong&gt;outside your GOPATH&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;git clone https://go.googlesource.com/go
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Next, you’ll need to build this version of Go.&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;cd &lt;/span&gt;go/src &lt;span class=&quot;o&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt; ./all.bash
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;oh-no-errors&quot;&gt;Oh no! Errors!&lt;/h2&gt;
+
+&lt;p&gt;Sadly, for me, this lead to an error as shown below:&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;##### Building Go bootstrap tool.&lt;/span&gt;
+cmd/dist
+ERROR: Cannot find /home/nikhita/go1.4/bin/go.
+Set &lt;span class=&quot;nv&quot;&gt;$GOROOT_BOOTSTRAP&lt;/span&gt; to a working Go tree &lt;span class=&quot;o&quot;&gt;&amp;gt;=&lt;/span&gt; Go 1.4.
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;But hey, I was already on Go 1.8.1! So I needed to set &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$GOROOT_BOOTSTRAP&lt;/code&gt; environment variable to point to the Go 1.8.1 binary. This error occurs because it defaults to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$GOROOT&lt;/code&gt; if not specified and my &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$GOROOT&lt;/code&gt; is also not set (since I don’t have a custom installation). Oops.&lt;/p&gt;
+
+&lt;p&gt;The simple fix:&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;export &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;GOROOT_BOOTSTRAP&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;/usr/local/go
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Build the binary using &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;./all.bash&lt;/code&gt; again. It should work now! :tada:&lt;/p&gt;
+
+&lt;h2 id=&quot;aliasing&quot;&gt;Aliasing&lt;/h2&gt;
+
+&lt;p&gt;You have two Go binaries installed on your machine now. Yay! But now what? How should you decide which version needs to be invoked when you run &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;go version&lt;/code&gt;?&lt;/p&gt;
+
+&lt;p&gt;In my case, I had 1.8.1 installed already and it’s binary was already in my &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$PATH&lt;/code&gt; so this was my &lt;strong&gt;default&lt;/strong&gt; version.&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;go version
+go version go1.8.1 linux/amd64
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;To invoke your new, shiny Go binary from HEAD, you’ll need to use &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;go/bin/go version&lt;/code&gt; where you installed the source repo. It’s better to alias this so that you won’t have to repeat this every time. Add something like this in your .zshrc/.bashrc/what-have-you - &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;alias godev=/home/nikhita/go-dev/go/bin/go&lt;/code&gt;. Now when you run:&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;godev version
+go version devel +8ec7a39fec Sat Jun 24 00:54:01 2017 +0000 linux/amd64
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Viola! :boom:&lt;/p&gt;
+
+</description>
+        <pubDate>Sun, 25 Jun 2017 00:00:00 +0000</pubDate>
+        <link>https://risyandi.com/blogs/blogs/install-multiple-versions-go</link>
+        <guid isPermaLink="true">https://risyandi.com/blogs/blogs/install-multiple-versions-go</guid>
+        
+        
+      </item>
+    
+      <item>
+        <title>How to update VSCode on Linux</title>
+        <description>&lt;p&gt;Whenever VSCode makes a new version available, it prompts you to go to the website and manually download the deb package. But downloading the deb everytime there is an update…just sucks.&lt;/p&gt;
+
+&lt;p&gt;Luckily, Microsoft has introduced official signed repositories with the &lt;a href=&quot;https://code.visualstudio.com/updates/v1_10#_miscellaneous&quot;&gt;February 2017 (v1.10)&lt;/a&gt; update. So to update VSCode, you need to do the following:&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;add-apt-repository &lt;span class=&quot;nt&quot;&gt;-y&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;deb https://packages.microsoft.com/repos/vscode stable main &quot;&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;apt update
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;apt &lt;span class=&quot;nt&quot;&gt;-y&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;install &lt;/span&gt;code
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;This will install the new version of VSCode with all your &lt;em&gt;old extensions still enabled&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;The next time a dialog box prompts you that there is a new version available, you don’t need to do the above steps again. You can upgrade it using:&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;apt-get update 
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;apt-get dist-upgrade
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Note: If you are unfamiliar with &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;dist-upgrade&lt;/code&gt;, &lt;a href=&quot;https://askubuntu.com/questions/81585/what-is-dist-upgrade-and-why-does-it-upgrade-more-than-upgrade&quot;&gt;this&lt;/a&gt; might prove to be a good read.&lt;/p&gt;
+
+&lt;p&gt;After the update, reload the window. You should be welcomed with release notes for the new version. This means that the update was successful and you got it up and running! :tada:&lt;/p&gt;
+</description>
+        <pubDate>Tue, 20 Jun 2017 00:00:00 +0000</pubDate>
+        <link>https://risyandi.com/blogs/blogs/how-to-update-vscode</link>
+        <guid isPermaLink="true">https://risyandi.com/blogs/blogs/how-to-update-vscode</guid>
+        
+        
+      </item>
+    
+      <item>
+        <title>GSoC with Kubernetes - Week 2 and 3</title>
+        <description>&lt;p&gt;This is an update of Week 2 and 3 for my Google Summer of Code project with Kubernetes (Cloud Native Computing Foundation). I ended up coding a lot more, talking to other community members and having even more fun. :smile:&lt;/p&gt;
+
+&lt;h2 id=&quot;the-code-part&quot;&gt;The Code Part&lt;/h2&gt;
+
+&lt;p&gt;I mainly wrote a lot of integration tests and fixed bugs along the way for CRDs. Code freeze is up on June 1 so I’d like to get all integration tests by then (only a couple remaining!). So CRDs should be perfectly polished and ready by 1.7.&lt;/p&gt;
+
+&lt;p&gt;I also collated ideas related to the proposal and added a validation schema for Pod - will be working on the proposal more in the next week (after the code freeze).&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Added the following integration tests:
+    &lt;ul&gt;
+      &lt;li&gt;test for no namespace rejection&lt;/li&gt;
+      &lt;li&gt;test for creating resources with same name and different namespace&lt;/li&gt;
+      &lt;li&gt;test for checking if integers are preserved while decoding (originally a TPR regression)&lt;/li&gt;
+      &lt;li&gt;test for self link of cluster scoped resources&lt;/li&gt;
+      &lt;li&gt;test for name conflicts&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Created some more PRs/issues:
+    &lt;ul&gt;
+      &lt;li&gt;Add plural name for CustomResources example in &lt;a href=&quot;https://github.com/kubernetes/kubernetes/pull/45793&quot;&gt;#45793&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;Fixed the controller doc in &lt;a href=&quot;https://github.com/kubernetes/community/pull/621&quot;&gt;#621&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;Created an &lt;a href=&quot;https://github.com/kubernetes/test-infra/issues/2787&quot;&gt;issue&lt;/a&gt; on &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;kubernetes/test-infra&lt;/code&gt; for a flake that was hitting all PRs. See &lt;a href=&quot;https://github.com/kubernetes/kubernetes/issues/45978&quot;&gt;this&lt;/a&gt; issue for further discussion.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;the-tale-of-crd-deletion&quot;&gt;The Tale of CRD Deletion:&lt;/h2&gt;
+&lt;p&gt;While writing the test for name conflicts, I hit a lot of bugs and it was interesting solving them!&lt;/p&gt;
+
+&lt;p&gt;It initially caused a panic (&lt;a href=&quot;https://gist.github.com/nikhita/345c3629fc4a942b7c9ee5275dfeb74b&quot;&gt;stack trace&lt;/a&gt;). This occurred because now we deleted from storage instead of the client (after this &lt;a href=&quot;https://github.com/kubernetes/kubernetes/pull/46296&quot;&gt;PR&lt;/a&gt;). This was racing the storage and causing a nil dereference. PR with fix: &lt;a href=&quot;https://github.com/kubernetes/kubernetes/pull/46430&quot;&gt;#46430&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Did a rebase again but still did not work! Now I got:  &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;&quot;reason&quot;: &quot;InstanceDeletionFailed&quot;&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;&quot;message&quot;: &quot;could not list instances: unable to find a custom resource client for noxus.mygroup.example.com&quot;&lt;/code&gt;. The problem turned out to be that the storage map was only filled if a CR (not the CRD!) was accessed via some CRUD request. So this worked only if you created CRs before the CRD deletion. PR with fix: &lt;a href=&quot;https://github.com/kubernetes/kubernetes/pull/46501&quot;&gt;#46501&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Also fixed the naming controller so that when a resource is deleted, other resources in the same group are added to the queue. This is necessary since the deleted CRD can free names. Added a &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;requeueAllOtherGroupCRDs&lt;/code&gt; function for the above. Had a little trouble making the synchronization was right. I was using &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;time.Sleep&lt;/code&gt; before which looked very wrong. Tried polling later, then thought that polling was in fact not needed at all! Finally added in the right place (in &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;apierrors.NotFound(err)&lt;/code&gt;) and got it working! :boom:&lt;/p&gt;
+
+&lt;h2 id=&quot;the-community-bonding-part&quot;&gt;The Community Bonding Part&lt;/h2&gt;
+
+&lt;p&gt;I talked to David (who is working on CRDs a lot) about the project/CRDs and he was very helpful! I had not spoked to him before so this was a nice community bonding exercise.&lt;/p&gt;
+
+&lt;p&gt;I also helped a few folks on Slack and answered their questions. Lots of people reached out to be in these two weeks asking me how they could contribute to Kubernetes. It was exciting seeing the sudden interest! I think most of them faced the issue of not being able to find a beginner-friendly task. I pointed them to a few easy issues but hope to come up with a solution to that!&lt;/p&gt;
+
+&lt;p&gt;I even did my first small code review. That felt great because I never thought I could ever be so confident about a codebase to do a review of others’ code. :grinning:&lt;/p&gt;
+
+&lt;h2 id=&quot;conclusion&quot;&gt;Conclusion&lt;/h2&gt;
+
+&lt;p&gt;I am really enjoying working with the Kubernetes community. Everyone is very friendly and I look forward to Mondays now (yes, you read that right!). In other news, I got a scholarship from WomenWhoGo and GoBridge to attend GopherCon at Denver. Looking forward to meeting people I have been interacting with online and making new friends! :)&lt;/p&gt;
+
+&lt;p&gt;PS: Had some Twitter fun this week -&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;div align=&quot;center&quot;&gt;
+&lt;blockquote class=&quot;twitter-tweet&quot; data-lang=&quot;en&quot;&gt;&lt;p lang=&quot;en&quot; dir=&quot;ltr&quot;&gt;&lt;a href=&quot;https://twitter.com/TheNikhita&quot;&gt;@TheNikhita&lt;/a&gt; Thanks for your work so far &lt;a href=&quot;https://twitter.com/TheNikhita&quot;&gt;@TheNikhita&lt;/a&gt;! You fixed a bug that we hit in Kubernetes and is getting backported to the next 1.6.x branch 👍👍👍&lt;/p&gt;&amp;mdash; Brandon Philips (@BrandonPhilips) &lt;a href=&quot;https://twitter.com/BrandonPhilips/status/867820077063602176&quot;&gt;May 25, 2017&lt;/a&gt;&lt;/blockquote&gt;
+&lt;script async=&quot;&quot; src=&quot;//platform.twitter.com/widgets.js&quot; charset=&quot;utf-8&quot;&gt;&lt;/script&gt;
+&lt;br /&gt;
+&lt;blockquote class=&quot;twitter-tweet&quot; data-lang=&quot;en&quot;&gt;&lt;p lang=&quot;en&quot; dir=&quot;ltr&quot;&gt;Love seeing &lt;a href=&quot;https://twitter.com/hashtag/gsoc?src=hash&quot;&gt;#gsoc&lt;/a&gt; interns making impact in &lt;a href=&quot;https://twitter.com/kubernetesio&quot;&gt;@kubernetesio&lt;/a&gt; &lt;a href=&quot;https://t.co/zSPxOZIZx7&quot;&gt;https://t.co/zSPxOZIZx7&lt;/a&gt; &lt;a href=&quot;https://t.co/rj9ooTHFOo&quot;&gt;https://t.co/rj9ooTHFOo&lt;/a&gt;&lt;/p&gt;&amp;mdash; Brandon Philips (@BrandonPhilips) &lt;a href=&quot;https://twitter.com/BrandonPhilips/status/867821071872909312&quot;&gt;May 25, 2017&lt;/a&gt;&lt;/blockquote&gt;
+&lt;script async=&quot;&quot; src=&quot;//platform.twitter.com/widgets.js&quot; charset=&quot;utf-8&quot;&gt;&lt;/script&gt;
+&lt;/div&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+</description>
+        <pubDate>Mon, 29 May 2017 00:00:00 +0000</pubDate>
+        <link>https://risyandi.com/blogs/blogs/google-summer-of-code-kubernetes-week2-3-community-bonding</link>
+        <guid isPermaLink="true">https://risyandi.com/blogs/blogs/google-summer-of-code-kubernetes-week2-3-community-bonding</guid>
+        
+        <category>gsoc</category>
+        
+        
+      </item>
+    
+      <item>
+        <title>GSoC with Kubernetes - Week 1</title>
+        <description>&lt;h1 id=&quot;getting-in&quot;&gt;Getting in&lt;/h1&gt;
+
+&lt;p&gt;In my last &lt;a href=&quot;https://nikhita.github.io/experience-gophercon-india&quot;&gt;post&lt;/a&gt;, I mentioned about speaking at GopherCon India. It was a surreal experience and it introduced me to Kubernetes. I was aware of Kubernetes before (having used Docker) but didn’t really take the leap to contributing to it. Attending the conference made me go “Damn, this sounds so cool. I am definitely looking at the contributing guide after I get back home!”.&lt;/p&gt;
+
+&lt;p&gt;Luckily, the day I got back home was the day when organizations for Google Summer of Code were announced. I was &lt;strong&gt;beyond enthralled&lt;/strong&gt; to see &lt;a href=&quot;https://github.com/cncf/soc&quot;&gt;CNCF&lt;/a&gt; on the list and started reading the documentation for Kubernetes right away. It took me about a week to get comfortable with k8s and the project, set up my development environment and understand the codebase. I solved a few issues for the pre-GSoC involvement, discussed and got my proposal reviewed from my mentor.&lt;/p&gt;
+
+&lt;p&gt;After a month long wait, contributions and exams, I finally got the result that I had been selected for Google Summer of Code this year! Last winter, I had applied for &lt;a href=&quot;https://wiki.gnome.org/Outreachy&quot;&gt;Outreachy&lt;/a&gt; and was going to be selected but couldn’t join later due to timeline restrictions (Outreachy needed two months of winter vacations while I had just one month free). I was bummed to hear that and my thirst to get into GSoC strengthed even more. Receiving the GSoC result was one of the best moments of my life!   :smile:&lt;/p&gt;
+
+&lt;h1 id=&quot;my-project&quot;&gt;My project&lt;/h1&gt;
+
+&lt;p&gt;Kubernetes comes with many built-in API objects. However, it also offers you the feature to extend the Kubernetes API using Third Party Resources (TPRs). TPRs are a very exciting and crucial part of Kubernetes since it offers one to create their own custom objects. You can think of TPRs as being much like the schema for a database table. Once you have created the table, you can then start storing rows in the table. Once created, TPRs can act as the data model behind custom controllers or automation programs.&lt;/p&gt;
+
+&lt;p&gt;The implementation to allow the creation of TPRs is present but the implementation has languished. There are multiple problems associated with it and one of my goals this summer is to work on these problems to drive them stable and to shower some love at TPRs! One of the main features I will be working on is implementing validation. If time permits, other features will also be added. You can read about the current situation of Third Party Resources &lt;a href=&quot;https://github.com/kubernetes/features/issues/95&quot;&gt;here&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h1 id=&quot;the-community&quot;&gt;The Community&lt;/h1&gt;
+
+&lt;p&gt;Google lets students get comfortable with the community, their projects and the development environment initially. The student is not required to code right away. This period is to allow students to refine their project ideas so they can code without any hassle during the coding period. Hence, this period is called the Community Bonding Period. I really liked this approach. :heart:&lt;/p&gt;
+
+&lt;p&gt;My first week has been absolutely amazing! I had the &lt;strong&gt;best&lt;/strong&gt; time working with my mentor - &lt;a href=&quot;https://github.com/sttts&quot;&gt;Dr. Stefan Schimanski&lt;/a&gt;. Even when I did not know something, he explained with utmost patience without making me feel bad about not knowing it. Meanwhile, I was also encouraged to ask questions without hesitation. This gives a HUGE boost to us mentees while communicating with mentors. I am deeply thankful for his help.&lt;/p&gt;
+
+&lt;p&gt;My experience interacting with other community members has been positive too. I tweeted about my gsoc selection and was overwhelmed to recieve such a warm welcome from the community! Even while interacting on slack and github, everyone has been very friendly. The environment is very pleasant and I am having great fun working with such an awesome community! Kubernetes takes the cake for being the friendliest open source community ever!&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;div align=&quot;center&quot;&gt;
+&lt;blockquote class=&quot;twitter-tweet&quot; data-lang=&quot;en&quot;&gt;&lt;p lang=&quot;en&quot; dir=&quot;ltr&quot;&gt;Excited to work on &lt;a href=&quot;https://twitter.com/kubernetesio&quot;&gt;@kubernetesio&lt;/a&gt; as my &lt;a href=&quot;https://twitter.com/gsoc&quot;&gt;@gsoc&lt;/a&gt; project! 🎉 &lt;a href=&quot;https://t.co/pir10SzTZe&quot;&gt;https://t.co/pir10SzTZe&lt;/a&gt;&lt;/p&gt;&amp;mdash; Nikhita Raghunath (@TheNikhita) &lt;a href=&quot;https://twitter.com/TheNikhita/status/860238784205606912&quot;&gt;May 4, 2017&lt;/a&gt;&lt;/blockquote&gt;
+&lt;script async=&quot;&quot; src=&quot;//platform.twitter.com/widgets.js&quot; charset=&quot;utf-8&quot;&gt;&lt;/script&gt;
+&lt;/div&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;The CNCF community has been very engaging and hospitable too. After the selection, CNCF released a &lt;a href=&quot;https://www.cncf.io/blog/2017/05/04/cncf-brings-kubernetes-coredns-opentracing-prometheus-google-summer-code-2017/&quot;&gt;blog post&lt;/a&gt; on their website mentioning about us GSoC students and they were very friendly over email and slack as well. I feel very lucky to be part of CNCF. :)&lt;/p&gt;
+
+&lt;h1 id=&quot;the-work&quot;&gt;The Work&lt;/h1&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;One of the main features I will be implementing for TPRs is validation. This week I started out with comparing two go json schema libraries that we could use for validation. I wrote benchmarks for the same and chose one of them after analyzing their strengths and weaknesses.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;I will soon be publishing a design proposal for validation. I researched a bit more about it, made notes and wrote down tricky questions that the project could face. There are still some open questions and I will be addressing them and coming up with the draft proposal next week.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;a href=&quot;https://github.com/deads2k&quot;&gt;David&lt;/a&gt; had been working on creating a stable base for TPRs (now it will probably be called Custom Resources). He even wrote a nice step-by-step approach on setting up the new kube-apiextensions-server which I transformed into a bash &lt;a href=&quot;https://github.com/nikhita/gsoc-meta-k8s/blob/master/notes/set-kube-apiextensions-server.sh&quot;&gt;script&lt;/a&gt; for easy access. ;)&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;I began tinkering around with the new TPR code and started out writing integration tests for the same. The pull request can be seen &lt;a href=&quot;https://github.com/kubernetes/kubernetes/pull/45721&quot;&gt;here&lt;/a&gt; and the list of integration tests can be seen &lt;a href=&quot;https://github.com/kubernetes/kubernetes/issues/45511&quot;&gt;here&lt;/a&gt;. I plan to add more integration tests, solve issues and help out with &lt;a href=&quot;https://github.com/kubernetes/kubernetes/issues/45728&quot;&gt;migration&lt;/a&gt; in the coming weeks.&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;I have been maintaining a google doc with daily updates which serves as a neat log of what I am working on. A major benefit is that I can take a step back and see the overall progress of my project. I have collated everything related to my GSoC project in one &lt;a href=&quot;https://github.com/nikhita/gsoc-meta-k8s&quot;&gt;meta repository&lt;/a&gt; on Github. If you are interested in knowing more about this project, please visit the repo for a better perspective on it. :)&lt;/p&gt;
+
+&lt;h1 id=&quot;conclusion&quot;&gt;Conclusion&lt;/h1&gt;
+
+&lt;p&gt;I don’t intend to write such long blog posts about my weekly progress in the future (I will definitely write, but they will be short and sweet). These blog posts provide a rather detailed and personal overview of my experience. Instead if you are interested in knowing only about the progress, you can visit the repo to get summarized weekly reports!&lt;/p&gt;
+
+&lt;p&gt;When I started out with Kubernetes, I faced a lot of trouble getting a hang out of it. In the coming weeks, I also plan on writing a few blog posts for beginners. I believe that being a newbie myself, I can offer a better and a fresher perspective. So come back after a few weeks to read more!&lt;/p&gt;
+
+&lt;p&gt;I am having immense fun working with the Kubernetes team and I plan on contributing more and continuing to have more fun over the summer! :tada:&lt;/p&gt;
+
+</description>
+        <pubDate>Sun, 14 May 2017 00:00:00 +0000</pubDate>
+        <link>https://risyandi.com/blogs/blogs/google-summer-of-code-kubernetes-week-1</link>
+        <guid isPermaLink="true">https://risyandi.com/blogs/blogs/google-summer-of-code-kubernetes-week-1</guid>
+        
+        <category>gsoc</category>
+        
+        
+      </item>
+    
+      <item>
+        <title>My experience at GopherCon India 2017</title>
+        <description>&lt;p&gt;I attended GopherCon India, held at Hyatt Regency in Pune, on a &lt;a href=&quot;http://www.gophercon.in/scholarship/&quot;&gt;student scholarship&lt;/a&gt; this year. It was my first conference and this is my personal account of attending it.&lt;/p&gt;
+
+&lt;p&gt;TLDR: IT WAS AWESOME.&lt;/p&gt;
+
+&lt;h3 id=&quot;day-0--workshop&quot;&gt;Day 0 : Workshop&lt;/h3&gt;
+
+&lt;p&gt;I had enrolled for Francesc’s workshop on &lt;em&gt;building highly scalable web applications in Go&lt;/em&gt; which was conducted a day prior to the conference. And I had a blast at the workshop! I learnt a lot about google cloud, app engine and also got 100$ worth of free google cloud credits! We encountered a bug while using app engine in the workshop so I even opened an &lt;a href=&quot;https://github.com/golang/appengine/issues/55&quot;&gt;issue&lt;/a&gt; on Github for this. After coming back, I went on to deploy some web apps on app engine. It was an amazing learning experience!&lt;/p&gt;
+
+&lt;p&gt;We had some funny moments with the Wifi (or lack thereof) and the external APIs which seemed to give some hilariously bizarre results. AND I also met the &lt;a href=&quot;https://twitter.com/rtnpro&quot;&gt;developer&lt;/a&gt; of the IRC client that I use! How cool is that? :D&lt;/p&gt;
+
+&lt;p&gt; 
+&lt;img alt=&quot;francesc-workshop-photo&quot; src=&quot;/blogs/assets/francesc-workshop-1.jpeg&quot; /&gt;
+ &lt;/p&gt;
+
+&lt;h3 id=&quot;day-1--the-talk&quot;&gt;Day 1 : The talk&lt;/h3&gt;
+
+&lt;p&gt;At the conference, I was practically bursting with awe at everything. The conference hall looked beautiful, the speakers were sooooo cool, the people were incredibly sweet and smart and there was lots of swag! But the people, oh my, the people were the heart of the conference. I talked to lots of people and all of them gave me useful advice on what I should be doing as a student and many were happy to see students coming out and networking at conferences.&lt;/p&gt;
+
+&lt;p&gt; 
+&lt;img alt=&quot;gci17-conference-hall&quot; src=&quot;/blogs/assets/gophercon-india-conference-hall.jpg&quot; /&gt;
+ &lt;/p&gt;
+
+&lt;p&gt;I was overflowing with so much enthusiasm that I kept on tweeting about how awesome GopherCon India is. :D The talks were so good - the little book I brought with me is full of my scribbles (aka notes) now. I particularly liked Bill Kennedy’s (just a secret between us, he probably has endless energy) talk where he was jumping and moving from one end of the hall to the other end! You should also go and checkout his &lt;a href=&quot;https://www.goinggo.net/2017/02/package-oriented-design.html&quot;&gt;blogpost&lt;/a&gt; on the talk - the design principles are mind blowingly good. I even got a free autographed copy of Go in Action (great book) and a cute pink Gopher sticker from him!&lt;/p&gt;
+
+&lt;p&gt; 
+&lt;img alt=&quot;bill-kennedy-gopher-sticker&quot; src=&quot;/blogs/assets/bill-kennedy-gopher-sticker.jpg&quot; /&gt;
+ &lt;/p&gt;
+
+&lt;p&gt;The organizers later announced that anyone who was interested in giving a lightning talk could write their name and topic on the whiteboard. I wanted to give one but I was nervous. Real nervous. I was battling in my mind whether I should give the talk or not. In the end, I thought “never gonna get a stage this big again”, so I picked the marker and wrote my name on the whiteboard. It sounds silly but voluntarily deciding to give a talk in front of so many people is super scary.&lt;/p&gt;
+
+&lt;p&gt;A couple of hours before my talk, I was sitting in the front row, listening to the speakers when it suddenly hit me: &lt;em&gt;I had decided to give a talk in front of hundreds of people. What had I done?&lt;/em&gt; My heart rate was maddening and I was panicking. Thankfully, I met &lt;a href=&quot;https://twitter.com/EngineerKamesh&quot;&gt;Kamesh Balakrishnan&lt;/a&gt;, who told me, “you might feel a little nervous during the first 5 seconds but you’ll be fine later”. And boy, was he right! I had a fabulous time giving the lightning talk and I ended at perfectly 5 minutes. YAY!! My talk got featured on &lt;a href=&quot;https://golangnews.com/stories/1868-slides-the-story-of-gopath-by-nikhita-raghunath&quot;&gt;golang news&lt;/a&gt; too!&lt;/p&gt;
+
+&lt;p&gt; 
+&lt;img alt=&quot;nikhita-raghunath-lightning-talk&quot; src=&quot;/blogs/assets/nikhita-lightning-talk.jpg&quot; /&gt;
+ &lt;/p&gt;
+
+&lt;p&gt;I ended up meeting other students - Shubheksha, Aman and Goutham - with whom I am still in touch. After the conference, Aman and I talked with Kamesh for over an hour discussing everything from the tech industry to the education system in India. He shared a lot of insights and experiences and it was fun learning all of that. We were also joined by Bill Kennedy at dinner and that led to many interesting discussions about design principles.&lt;/p&gt;
+
+&lt;p&gt;Finally, we called it a day and I reached my hotel around 10 pm.&lt;/p&gt;
+
+&lt;h3 id=&quot;day-2-more-talks--learning--networking&quot;&gt;Day 2: More talks + learning + networking&lt;/h3&gt;
+
+&lt;p&gt;Day 2 kicked off with Aditya Mukherjee’s talk on building Git-Go. I learnt a lot about git internals and went on to read more about that. Daniel’s talk on data science in Go was also particularly interesting, especially after I spent the previous week working on a simple neural network in Go. There were so many other great talks that I think I’ll mention it with my notes some other day. But I urge you to watch this &lt;a href=&quot;https://www.youtube.com/watch?v=nsM_m4hZ-bA&quot;&gt;video&lt;/a&gt; of Filipo talking about fighting latency. Seriously, go watch it. Now.&lt;/p&gt;
+
+&lt;p&gt;I also met more people, discussed ideas over coffee with a few and even met last year’s scholarship winner. It was really inspirational to see how far he had come in life. I met folks with whom I had interacted only on Twitter previously - they were cool IRL too! :)&lt;/p&gt;
+
+&lt;p&gt;Day 2 ended pretty fast (maybe because I was enjoying so much!). It was also nice to meet Satish Talim in person finally. By the way, he is a mega fabulous organizer. I mean it.&lt;/p&gt;
+
+&lt;p&gt;I didn’t want the conference to end at all. But of course, it ended.&lt;/p&gt;
+
+&lt;h3 id=&quot;day-bonus&quot;&gt;Day Bonus&lt;/h3&gt;
+
+&lt;p&gt;The conference ended on Saturday and I got back to Mumbai the same night. On Sunday, I attended a workshop by Francesc at GDG Mumbai. We did lots of network programming in Go and built &lt;a href=&quot;https://whispering-gophers.appspot.com/talk.slide#1&quot;&gt;Whispering Gophers&lt;/a&gt;. I talked to Francesc after the meetup and we spoke about how it feels being on stage and giving a talk. TLDR, it feels awesome. :D&lt;/p&gt;
+
+&lt;h3 id=&quot;conclusion&quot;&gt;Conclusion&lt;/h3&gt;
+
+&lt;p&gt;The only one thing that made me feel sad was the less number of women speakers. I hope that for next year we have many women/non-binary speakers, making it an even more diverse conference.&lt;/p&gt;
+
+&lt;p&gt;This was my first conference and it was the first time I was amidst such cool developers. It might seem like an exagerration but for someone who has not had such an experience before, this can be overwhelmingly fun.&lt;/p&gt;
+
+&lt;p&gt;I had a great time, I made new friends I am still in touch with and most importantly, I learnt a lot.&lt;/p&gt;
+
+&lt;p&gt;The conference may have ended but the enthusiasm, the energy and the sparkle in my eyes when I was there still continues to live on.&lt;/p&gt;
+
+</description>
+        <pubDate>Sat, 29 Apr 2017 00:00:00 +0000</pubDate>
+        <link>https://risyandi.com/blogs/blogs/experience-gophercon-india</link>
+        <guid isPermaLink="true">https://risyandi.com/blogs/blogs/experience-gophercon-india</guid>
+        
+        
+      </item>
+    
+      <item>
+        <title>Changing my github username</title>
+        <description>&lt;p&gt;Yesterday someone asked my github username on Slack and I said &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;nikinath&lt;/code&gt;. However, suddenly it just didn’t feel right. My IRC and Slack username is &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;nikhita&lt;/code&gt;. My Twitter handle is &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;TheNikhita&lt;/code&gt; (want to change it too, awaiting response from the original account holder)…so it makes sense to keep my Github username as just &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;nikhita&lt;/code&gt;, right?&lt;/p&gt;
+
+&lt;p&gt;It’s more professional and easier to link people to my work. Also, it makes things simpler while discussing on IRC and Slack - avoids all the overhead of asking for the GitHub username. It’s even easier for people to remember you! ;)&lt;/p&gt;
+
+&lt;p&gt;But honestly, the real reason? It’s just really COOL!
+&lt;br /&gt;
+&lt;br /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;github-username-squatting&quot;&gt;Github username squatting&lt;/h3&gt;
+
+&lt;p&gt;A quick google search told me that the username was already taken by someone. However, the user holding the account had absolutely zero activity since…forever (okay, 2011). But zero repos, zero stars, zero followers, zero…you get the gist (even zero gists, hehe).&lt;/p&gt;
+
+&lt;p&gt;Then I came across Github’s &lt;a href=&quot;https://help.github.com/articles/name-squatting-policy/&quot;&gt;username squatting policy&lt;/a&gt; and immediately clicked the &lt;em&gt;Contact a human&lt;/em&gt; button on the page and sent them this request:&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+Hi,&lt;br /&gt;&lt;br /&gt;
+
+I&apos;d like to know if the username `nikhita` can be released? The user who has registered that username doesn&apos;t seem to have any activity at all (from 2011).&lt;br /&gt;&lt;br /&gt;
+
+My first name is Nikhita so I&apos;d like to have `nikhita` as my username. Currently, I own `nikinath`.&lt;br /&gt;&lt;br /&gt;
+
+Please let me know if this is possible. Would be really awesome if it can be done!&lt;br /&gt;&lt;br /&gt;
+
+Cheers,&lt;br /&gt;
+Nikhita
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;br /&gt;
+Within &lt;strong&gt;15 minutes&lt;/strong&gt;, I get the following response:&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+
+Hi Nikhita,&lt;br /&gt;&lt;br /&gt;
+
+You are in luck — we have classified the ** nikhita** account as inactive and released the username for you to claim, as per our Name Squatting Policy:&lt;br /&gt;&lt;br /&gt;
+
+https://help.github.com/articles/name-squatting-policy&lt;br /&gt;&lt;br /&gt;
+
+Be quick, as the username is now publicly available. Glad to help!&lt;br /&gt;&lt;br /&gt;
+
+Thanks,&lt;br /&gt;&lt;br /&gt;
+
+Jacqui
+
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;br /&gt;
+Github’s customer service has always been phenomenal. Never failed me.&lt;/p&gt;
+
+&lt;p&gt;Happily, I changed my username and waited for things to break.
+&lt;br /&gt;
+&lt;br /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;everything-breaks&quot;&gt;Everything breaks!&lt;/h3&gt;
+
+&lt;p&gt;Thankfully, I decided to change the username sooner than later. There aren’t &lt;em&gt;that&lt;/em&gt; many things linked to my username currently.&lt;/p&gt;
+
+&lt;p&gt;I put on my imaginary save-your-github-account-from-doom gloves and did the following:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;updated all my remotes: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;git remote set-url origin git://new.url.here&lt;/code&gt;. Revisited a lot of my repos/forks and updated them.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Let some people know about the username change so they can update on their side.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Made a dummy github account with the old username &lt;a href=&quot;https://github.com/nikinath&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;nikinath&lt;/code&gt;&lt;/a&gt; to help with redirects.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;I share a lot of gists with people on slack/irc. Thankfully, slack provides allows you to edit the messages. So, I edited the gist links in case someone clicks on it in the future (unlikely, but still).&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Some of my work involves having signed the &lt;a href=&quot;https://github.com/cncf/cla&quot;&gt;CNCF CLA&lt;/a&gt;. So updated in the Linux Foundation ID.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Changed the link on Keybase, Twitter, etc.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;My website is hosted on Github pages which generates the domain name from the username. I did a &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;grep -rn &quot;nikinath&quot;&lt;/code&gt; in my website repo. YIKES.&lt;/p&gt;
+
+    &lt;ul&gt;
+      &lt;li&gt;made the relevant changes from &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;nikinath&lt;/code&gt; to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;nikhita&lt;/code&gt;&lt;/li&gt;
+      &lt;li&gt;updated Google Analytics&lt;/li&gt;
+      &lt;li&gt;updated Disqus&lt;/li&gt;
+      &lt;li&gt;resubmitted to Google Webmaster Tools&lt;/li&gt;
+      &lt;li&gt;created a new remote repo &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;nikhita.github.io&lt;/code&gt; and made my local repo track this.&lt;/li&gt;
+      &lt;li&gt;pushed changes and make sure it works. If you are reading this, then yes, it worked. :D&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Hope nothing else has broken.&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;gotchas&quot;&gt;Gotchas&lt;/h3&gt;
+
+&lt;p&gt;There a few things you should know about changing the username:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;One place where the change doesn’t occur is in PR comments. If someone commented with an @-mention to you using &lt;strong&gt;@old-username&lt;/strong&gt;, it won’t redirect/change to &lt;strong&gt;@new-username&lt;/strong&gt;. So I would advice you to create a new account with your old username to help with such redirects.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;If you had initially set your email id as private, the commits you made directly using the Github UI will now be referenced to the old username. If you don’t create a new account to squat on the old one, these commits will be shown as committed by a “Ghost” user and will not be attributed to you. However, any commits you made using Git will be appropriately attributed to your new username.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Basically, you need to change all places where your old username occurs like &lt;em&gt;README&lt;/em&gt;, etc. Pro-tip: A Github search of your old username will turn out to be very useful in this case.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;It will probably take a week or two for search engines to index your new account. So if someone googles you, they will be taken to a broken link to your old one. Another reason why you should probably consider squatting on the old username. :wink:&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Someone asked me on Twitter if the change is also reflected in Gitter. Well, guess what? It is!&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;let-the-world-know&quot;&gt;Let the world know&lt;/h3&gt;
+&lt;div align=&quot;center&quot;&gt;
+&lt;blockquote class=&quot;twitter-tweet&quot; data-conversation=&quot;none&quot; data-lang=&quot;en&quot;&gt;&lt;p lang=&quot;en&quot; dir=&quot;ltr&quot;&gt;.&lt;a href=&quot;https://twitter.com/github&quot;&gt;@github&lt;/a&gt; Wohoo now I have my first name as my &lt;a href=&quot;https://twitter.com/github&quot;&gt;@github&lt;/a&gt; username! 😎&lt;/p&gt;&amp;mdash; Nikhita Raghunath (@TheNikhita) &lt;a href=&quot;https://twitter.com/TheNikhita/status/852901534912307200&quot;&gt;April 14, 2017&lt;/a&gt;&lt;/blockquote&gt;
+&lt;script async=&quot;&quot; src=&quot;//platform.twitter.com/widgets.js&quot; charset=&quot;utf-8&quot;&gt;&lt;/script&gt;
+&lt;/div&gt;
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;If you are ever planning to go down the username change road, may the Force be with you.&lt;/p&gt;
+
+&lt;p&gt;PS: Needless to say, my github profile is now at: &lt;a href=&quot;https://github.com/nikhita&quot;&gt;https://github.com/nikhita&lt;/a&gt;.&lt;/p&gt;
+
+</description>
+        <pubDate>Sat, 15 Apr 2017 00:00:00 +0000</pubDate>
+        <link>https://risyandi.com/blogs/blogs/changing-my-github-username</link>
+        <guid isPermaLink="true">https://risyandi.com/blogs/blogs/changing-my-github-username</guid>
+        
+        
+      </item>
+    
+      <item>
+        <title>Introduction to Keybase</title>
+        <description>&lt;p&gt;Ever since I heard of &lt;a href=&quot;https://keybase.io/&quot;&gt;Keybase&lt;/a&gt;, I wanted to join it. Unfortunately, when I first set my sight on it, it required an invitation to sign up. (At the time of writing this, Keybase does not require an invite even though the landing page of the website says otherwise. In case you need an invite, hit me up!)&lt;/p&gt;
+
+&lt;p&gt;The concept of Keybase seems to be easy to understand…once you have understood it! When I first heard of it, I was confused. It took me some googling to figure out what it really was. Hope this post clears all the fuzzy theories you have about Keybase. :)&lt;/p&gt;
+
+&lt;h3 id=&quot;what-is-keybase&quot;&gt;What is Keybase&lt;/h3&gt;
+
+&lt;p&gt;Keybase is a trusted storehouse of public keys. If I want to send you an encrypted message, I can easily find your public key. However, I want to be sure that it is indeed &lt;em&gt;you&lt;/em&gt; to whom I am sending the message - this is where the trust factor creeps in.&lt;/p&gt;
+
+&lt;p&gt;Keybase establishes trust by connecting to your social accounts. It will require you to post on each of your accounts - claiming them and linking back to your keybase account. So now I get to verify your identity and know that the person claiming to be you on twitter is actually you (as with github, etc). This reinforces my conviction in your public key and makes me feel comfortable in sending you the message.&lt;/p&gt;
+
+&lt;p&gt;Keybase has four main ‘features’:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;Establishes identity&lt;/strong&gt;: Keybase solves the problem of fake accounts by making you ‘prove’ your online identity - twitter, github, etc. Essentially, you are claiming your accounts and hence your identity. Once you do this, people can feel comfortable sending you messages even if they haven’t met you IRL. This is also known as the Web of Trust. 
+You will have to post something on twitter, github gists, etc to tell everyone that you control these accounts.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;Storehouse of public keys&lt;/strong&gt;: Keybase can be considered as a storehouse with easily searchable public keys. This is quite handy if you want to send/recieve encrypted messages - it eliminates the need to share the key with the person separately.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;Protection against hacks&lt;/strong&gt;: Keybase associates each device you own with an encryption key. If one of your devices get hacked, you can remove that device from your Keybase identity. So people now know that one of your devices was hacked and they won’t send messages to that device anymore.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;The awesome file system&lt;/strong&gt;: Keybase also has a file system of its own called KBFS. In simple terms, it’s a secure way of file sharing. There are two types of folders - public and private. Everything in your public folder is signed by you and private folders are end-to-end encrypted which means even Keybase can’t see them!&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;setting-up-your-account&quot;&gt;Setting up your account&lt;/h3&gt;
+
+&lt;p&gt;Note: The following is primarily meant for Linux.&lt;/p&gt;
+
+&lt;p&gt;Head to the &lt;a href=&quot;https://keybase.io/&quot;&gt;website&lt;/a&gt; and join. After joining, &lt;a href=&quot;https://keybase.io/download&quot;&gt;install&lt;/a&gt; the keybase app for your desktop. Start keybase by:&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;run_keybase&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;This is will open a GUI where you can login. If you prefer to use the CLI:&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;keybase login
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;keybase pgp &lt;span class=&quot;k&quot;&gt;select&lt;/span&gt;    &lt;span class=&quot;c&quot;&gt;# if you already have keys&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;Be cautious about adding your private key to the Keybase server. It &lt;em&gt;might&lt;/em&gt; be safe but your private key is meant for your eyes only - better to keep it that way.&lt;/p&gt;
+
+&lt;p&gt;You can add devices to your keybase account. Each device comes with an encryption key. In case any of your devices is compromised, remove it from your account. Keybase also “tracks” users you follow. So if any user has their device compromised, it will let you know.&lt;/p&gt;
+
+&lt;p&gt;The mobile apps are still in development. Until then, you can use something called as “paper keys”. They are NaCl keys which can be used to provision a new computer. It’s a series of words out of which the first two words are the public label and the rest encodes the private key.&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;keybase device add
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;keybase paperkey&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;h3 id=&quot;establishing-your-identity&quot;&gt;Establishing your identity&lt;/h3&gt;
+
+&lt;p&gt;It will prompt you to post tweets, gists or what have you to tell everyone: “The person who owns all these accounts is the same - ME! ME! ME!” (obviously not literally).&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;keybase prove twitter
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;keybase prove github&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;div align=&quot;center&quot;&gt;
+&lt;blockquote class=&quot;twitter-tweet&quot; data-lang=&quot;en&quot;&gt;&lt;p lang=&quot;ht&quot; dir=&quot;ltr&quot;&gt;Verifying myself: I am nikhita on Keybase.io. cpc3RA8ONsz-83w_F1AngE311_N2CXo2AODV / &lt;a href=&quot;https://t.co/VJlCsJp3i2&quot;&gt;https://t.co/VJlCsJp3i2&lt;/a&gt;&lt;/p&gt;&amp;mdash; Nikhita Raghunath (@TheNikhita) &lt;a href=&quot;https://twitter.com/TheNikhita/status/820346838989598720&quot;&gt;January 14, 2017&lt;/a&gt;&lt;/blockquote&gt;
+&lt;script async=&quot;&quot; src=&quot;//platform.twitter.com/widgets.js&quot; charset=&quot;utf-8&quot;&gt;&lt;/script&gt;
+&lt;/div&gt;
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;Keybase creates a nice Merkel tree for you showing how your accounts and devices are connected. Note that you can use the paperkey to provision a second computer which would be shown as an arrow originating from the paperkey itself.&lt;/p&gt;
+
+&lt;p&gt; 
+&lt;img alt=&quot;merkel-tree&quot; src=&quot;/blogs/assets/merkel-tree.png&quot; /&gt;
+ 
+&lt;br /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;sending-encrypted-messages&quot;&gt;Sending encrypted messages&lt;/h3&gt;
+
+&lt;p&gt;If you have added your private key on their server, you can use the website to encrypt and decrypt messages. In case you decide to do so, remember that encryption/decryption will happen in JS in your browser. So think twice!&lt;/p&gt;
+
+&lt;p&gt;If you haven’t added your private key, then you’ll have to use the CLI to encrypt or decrypt messages.&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;keybase pgp encrypt nikhita &lt;span class=&quot;nt&quot;&gt;-m&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;This is a test message!&quot;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;-----BEGIN&lt;/span&gt; PGP MESSAGE-----
+Comment: https://keybase.io/download
+Version: Keybase Go 1.0.18 &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;linux&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+
+wcBMAzntlzkGOvi9AQgAZH3Fyv6U8C/OVbU8tgWqMec6qSWdQQsPH7rVm7y4KyN/
+nDrZe3RhuS0i9HtfgnNbQipmzG2LcL6DN+KLhHvrYAhCa9TOg4sY8LVDe1aNw8Vg
+T66AQ7LHsnTbK5z8HrngTIH3HnWEvuInUp+Tlqa47l2k3MX4FNdnf2TKJ7L/nVtN
+x2vpkiGSE5iKj6AFsI11cv1WTuD48PNckBQpww5LJ8B4j8CCN5qw+gQfI85aMBYB
+54JWLB64eWpjMYP/aoopkBopW6ZigViH6km7eAqG1Wf4BttHROWjmJqF0BvK9wYE
+SN4I8Rt3f8PpDqh3OWrtXlZ5vmRUl1ckjFLStOGj1tLgAeRLWn4BcigIdZgCOnDk
+fNyf4UeJ4AXg5uHe1uDd4sJahQfgNeRrgQbnI5T54dwSwuFD3ZHR4H/iko70juAW
+4aey4C7kcbElZkcUaEDGFGZX0fXNF+IFrDLI4Zo1AA&lt;span class=&quot;o&quot;&gt;==&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;CzPf
+&lt;span class=&quot;nt&quot;&gt;-----END&lt;/span&gt; PGP MESSAGE-----&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;That’s it! Keybase will automatically search for my public key and use it to encrypt the message. Now you can send this encrypted block of text to me via any means - email, twitter, IM…anything! :)&lt;/p&gt;
+
+&lt;p&gt;I find this particularly handy because I don’t have to go around asking for the public key. In fact, I don’t even have to know the keybase username. I can send a message using the twitter account too.&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;keybase pgp encrypt TheNikhita@twitter &lt;span class=&quot;nt&quot;&gt;-m&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;Hi again!&quot;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;To decrypt:&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;keybase pgp decrypt &lt;span class=&quot;nt&quot;&gt;-m&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;encrypted-message-here&quot;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;More elaborate commands are available in the &lt;a href=&quot;https://keybase.io/docs/command_line&quot;&gt;documentation&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h3 id=&quot;using-the-file-system&quot;&gt;Using the file system&lt;/h3&gt;
+
+&lt;p&gt;Keybase offers a secure and distributed file storage system (something like Dropbox). Unlike Dropbox, there is no sync model here - files are available on demand. This means that it does not take up any memory on your system. Also, each user in the alpha product is offered 10 GB of space.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;You can find this file system mounted at &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/keybase/public/&amp;lt;username&amp;gt;&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/keybase/private/&amp;lt;username&amp;gt;&lt;/code&gt;. Instead of using my keybase username, my twitter (or other) username can also be used. &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/keybase/public/TheNikhita@twitter&lt;/code&gt; will also work.&lt;/li&gt;
+  &lt;li&gt;Everything that you store in the public folders is signed by you and everything that you store in private folders are end-to-end encrypted.&lt;/li&gt;
+  &lt;li&gt;Note that whatever you store in your public folder is visible at &lt;a href=&quot;https://keybase.pub/&quot;&gt;https://keybase.pub/&lt;/a&gt;. To see a particular users file, go to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;https://keybase.pub/&amp;lt;username&amp;gt;&lt;/code&gt;.&lt;/li&gt;
+  &lt;li&gt;Private folders are named as &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/keybase/public/nikhita,chris&lt;/code&gt; or &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/keybase/public/TheNikhita@twitter,chris&lt;/code&gt;. This is an end-to-end encrypted folder where I can share secure files with Chris. You don’t have to create such folders, they exist implicitly.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;c&quot;&gt;# to access public folders&lt;/span&gt;
+&lt;span class=&quot;nb&quot;&gt;cd&lt;/span&gt; /keybase/public/nikhita
+&lt;span class=&quot;nb&quot;&gt;cd&lt;/span&gt; /keybase/public/TheNikhita@twitter
+&lt;span class=&quot;nb&quot;&gt;cd&lt;/span&gt; /keybase/public/nikhita@github
+
+&lt;span class=&quot;c&quot;&gt;# to access private folders between you and me&lt;/span&gt;
+&lt;span class=&quot;nb&quot;&gt;cd&lt;/span&gt; /keybase/private/nikhita,&amp;lt;your-username&amp;gt;
+&lt;span class=&quot;nb&quot;&gt;cd&lt;/span&gt; /keybase/private/TheNikhita@twitter,&amp;lt;your-username&amp;gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;The best part of all this? If I am having a conversation with someone on twitter, I can simply say “That file is in our private folder on Keybase” without having to go through the hassle of asking for the public key!&lt;/p&gt;
+
+&lt;h3 id=&quot;conclusion&quot;&gt;Conclusion&lt;/h3&gt;
+
+&lt;p&gt;I love Keybase’s goals and design. It is also &lt;a href=&quot;https://github.com/keybase&quot;&gt;open source&lt;/a&gt; -comforting! There might be security concerns if your account or device is compromised but these can be mitigated by revoking them.&lt;/p&gt;
+
+&lt;p&gt;All in all, I like it and it would be exciting to see how it transitions from an alpha product in the future.&lt;/p&gt;
+
+</description>
+        <pubDate>Sun, 22 Jan 2017 00:00:00 +0000</pubDate>
+        <link>https://risyandi.com/blogs/blogs/introduction-to-keybase</link>
+        <guid isPermaLink="true">https://risyandi.com/blogs/blogs/introduction-to-keybase</guid>
+        
+        
+      </item>
+    
+      <item>
+        <title>Setting two factor authentication for Github</title>
+        <description>&lt;p&gt;When I heard of &lt;a href=&quot;https://help.github.com/articles/about-two-factor-authentication/&quot;&gt;2FA on Github&lt;/a&gt;, I was excited and immediately enabled it. But enabling it brought it’s fair share of problems and I was left scratching my head. I hope this post avoids that for you.&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;problems-i-faced&quot;&gt;Problems I faced&lt;/h2&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;There was no SMS fallback option in India. I prefer the in-app authentication for generating the OTP but it would have been nice if I had the SMS option as well. This isn’t a problem, I know, but it is annoying!&lt;/li&gt;
+  &lt;li&gt;I could no longer push to Github. Now this was bad. Real bad.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;git push origin master
+Username &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&apos;https://github.com&apos;&lt;/span&gt;: nikhita
+Password &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&apos;https://nikhita@github.com&apos;&lt;/span&gt;: 
+remote: Invalid username or password.
+fatal: Authentication failed &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&apos;https://github.com/nikhita/nikhita.github.io.git/&apos;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;how-to-solve-it&quot;&gt;How to solve it&lt;/h2&gt;
+
+&lt;p&gt;&lt;strong&gt;Generate a personal access token&lt;/strong&gt;: Github requires you to generate a Personal Access token for authenticating via the command line i.e. for git. To &lt;a href=&quot;https://help.github.com/articles/creating-an-access-token-for-command-line-use/&quot;&gt;generate&lt;/a&gt; this, go to Settings -&amp;gt; Personal Access Tokens -&amp;gt; Generate new token. Make sure you note down this token because you won’t be able to see it again!&lt;/p&gt;
+
+&lt;p&gt;Test the token by:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ curl -u &amp;lt;token&amp;gt;:x-oauth-basic https://api.github.com/user
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;You should see an output detailing your account. If something is wrong, you’ll see a message like this:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;{
+  &quot;message&quot;: &quot;Not Found&quot;,
+  &quot;documentation_url&quot;: &quot;http://developer.github.com/v3&quot;
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Now there are two ways to set up git for authenticating:&lt;/p&gt;
+
+&lt;h4 id=&quot;using-ssh&quot;&gt;Using SSH&lt;/h4&gt;
+
+&lt;p&gt;If you are using SSH, no additional steps are needed. Simply clone the repo, make the changes and then push. This way you won’t have to specify the username or the password. There is a pretty handy &lt;a href=&quot;https://help.github.com/articles/connecting-to-github-with-ssh/&quot;&gt;guide&lt;/a&gt; for setting up SSH on Github.&lt;/p&gt;
+
+&lt;h4 id=&quot;using-https&quot;&gt;Using HTTPS&lt;/h4&gt;
+
+&lt;p&gt;If you want to use HTTPS, use the &lt;em&gt;personal access token as the password&lt;/em&gt; when you push. However, specifying the token as a password everytime is quite cumbersome (even with caching on). So save the token in a file called &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;~/.netrc&lt;/code&gt; in the following format:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;machine github.com
+login nikhita
+password &amp;lt;token&amp;gt;
+protocol https
+
+machine gist.github.com
+login nikhita
+password &amp;lt;token&amp;gt;
+protocol https
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;This is saves your token in a plain text file which is not secure so encrypt it with gpg:&lt;/p&gt;
+
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;gpg &lt;span class=&quot;nt&quot;&gt;--encrypt&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;--armor&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;--recipient&lt;/span&gt; &amp;lt;email&amp;gt; .netrc
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;git config &lt;span class=&quot;nt&quot;&gt;--global&lt;/span&gt; credential.helper &lt;span class=&quot;s2&quot;&gt;&quot;netrc -f ~/.netrc.asc -v&quot;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;So now when you push over HTTPS, it won’t ask you for the username and token.&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;pro-tip&quot;&gt;Pro Tip&lt;/h2&gt;
+
+&lt;p&gt;SSH is far more secure than HTTPS for authentication. With HTTPS, if your username and password are seen or copied by someone, then that person has access to your entire account. As long as you look after your private key, SSH is more secure and convenient. Even if someone had access to your private key (for the love of all that is holy, please don’t let this happen), you can log in to your Github account and delete any stolen keys.&lt;/p&gt;
+
+&lt;p&gt;SSH can be tunneled over HTTPS if the network you are on blocks the SSH port. A nice &lt;a href=&quot;https://help.github.com/articles/using-ssh-over-the-https-port/&quot;&gt;tutorial&lt;/a&gt; is available. Thanks to &lt;a href=&quot;https://blog.sachinwrites.xyz/&quot;&gt;Sachin Kamath&lt;/a&gt; for mentioning this!&lt;/p&gt;
+
+</description>
+        <pubDate>Sun, 15 Jan 2017 00:00:00 +0000</pubDate>
+        <link>https://risyandi.com/blogs/blogs/github-two-factor-authentication</link>
+        <guid isPermaLink="true">https://risyandi.com/blogs/blogs/github-two-factor-authentication</guid>
+        
+        
+      </item>
+    
+      <item>
+        <title>Setting import path for go generate</title>
+        <description>&lt;p&gt;Go generate is one of my favorite tools but it is easy to mess up the import paths if you are not careful. This problem generally occurs when the import paths end up referencing to &lt;em&gt;your&lt;/em&gt; fork and not to the &lt;em&gt;original&lt;/em&gt; repo. This is a very common issue if you are:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Using go generate&lt;/li&gt;
+  &lt;li&gt;Collaborating with others over github (essentially having your own fork of the project)&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&quot;the-problem&quot;&gt;The Problem&lt;/h2&gt;
+
+&lt;p&gt;I was working on &lt;a href=&quot;https://github.com/taskcluster/taskcluster-cli&quot;&gt;taskcluster-cli&lt;/a&gt;. If you notice carefully, it has a file called &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;subtree-imports.go&lt;/code&gt; which automatically imports &lt;em&gt;subtrees&lt;/em&gt; on running &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;go generate&lt;/code&gt;, which means it has import paths like:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;github.com/taskcluster/taskcluster-cli/apis
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;If I fork the project and automatically generate imports, it will import a path something like this:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;github.com/nikhita/taskcluster-cli/apis
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;As you can see, the import path generated are different. This is all horribly screwed up now! :(&lt;/p&gt;
+
+&lt;h2 id=&quot;the-solution&quot;&gt;The solution&lt;/h2&gt;
+
+&lt;p&gt;Let’s dive into the heart of the problem! The import paths get messed up because they depend on where the code is residing. When I clone my fork, the code is now residing at &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$GOPATH/src/github.com/nikhita/taskcluster-cli &lt;/code&gt; and not at &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$GOPATH/src/github.com/taskcluster/taskcluster-cli&lt;/code&gt; which leads to…import hell?&lt;/p&gt;
+
+&lt;p&gt;So the solution is to make sure that your code resides at &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$GOPATH/src/github.com/taskcluster/taskcluster-cli&lt;/code&gt;. Wait! Before you freak out and start yelling “I WANT TO MAKE CHANGES AND PUSH TO MY FORK, NOT THE ORIGINAL REPO!”, let’s add some more remotes! :D&lt;/p&gt;
+
+&lt;h3 id=&quot;get-the-names-right&quot;&gt;Get the names right&lt;/h3&gt;
+
+&lt;p&gt;If you do a &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ git remote -v&lt;/code&gt; at the location where your original repo is, you’ll probably see something like this:&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;origin    https://github.com/taskcluster/taskcluster-cli &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;fetch&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+origin    https://github.com/taskcluster/taskcluster-cli &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;push&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;Before adding more remotes, let’s name everything how it should be. Let’s call this remote as &lt;em&gt;upstream&lt;/em&gt;. Just do a &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ git remote rename origin upstream&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;For a sanity check, let’s &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ git remote -v&lt;/code&gt; again:&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;upstream    https://github.com/taskcluster/taskcluster-cli &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;fetch&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+upstream    https://github.com/taskcluster/taskcluster-cli &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;push&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;Phew, we are out of messing up with names now! :)&lt;/p&gt;
+
+&lt;h3 id=&quot;adding-your-fork&quot;&gt;Adding your fork&lt;/h3&gt;
+
+&lt;p&gt;Now I’ll add my fork as a remote. Let’s call it &lt;em&gt;origin&lt;/em&gt;.&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;git remote add origin https://github.com/nikhita/taskcluster-cli.git&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;We can see that doing this does us good:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Now our import paths point to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$GOPATH/src/github.com/taskcluster/taskcluster-cli&lt;/code&gt; and not a directory with my fork.&lt;/li&gt;
+  &lt;li&gt;My import paths will no longer get messy.&lt;/li&gt;
+  &lt;li&gt;I can still safely make changes and push to my fork (origin).&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;fixing-branches&quot;&gt;Fixing branches&lt;/h3&gt;
+
+&lt;p&gt;Read this only if you don’t have a fresh fork i.e. you have made some changes, pushed it to a remote repo (mostly your fork) and now realized that you have to sort out everything. If you a fresh fork, move onto the next section.&lt;/p&gt;
+
+&lt;p&gt;To fix this, you can create branches according to your fixes and make these branches track the branches in the remote fork.&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Create a new branch according to your fix. Let’s call the branch &lt;em&gt;my-fix-local&lt;/em&gt;.&lt;/li&gt;
+  &lt;li&gt;If you have previously worked on the fix and pushed it to your forked repo, make the local branch track your remote branch.&lt;/li&gt;
+  &lt;li&gt;Pull your work from the remote branch&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;c&quot;&gt;# create a new branch&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;git checkout &lt;span class=&quot;nt&quot;&gt;-b&lt;/span&gt; my-fix-local
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;git checkout master
+&lt;span class=&quot;c&quot;&gt;# list all branches&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;git branch
+&lt;span class=&quot;c&quot;&gt;# track the local branch with the remote branch&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;git branch &lt;span class=&quot;nt&quot;&gt;--track&lt;/span&gt; my-fix-local origin/my-fix-remote
+&lt;span class=&quot;c&quot;&gt;# get your work back!&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;git pull&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;h3 id=&quot;check-the-import-paths&quot;&gt;Check the import paths&lt;/h3&gt;
+
+&lt;p&gt;Now that you have your repo in the right location, with the changes you had made, you can import all your paths again. This time, you’ll see that there would be no conflicts with original import paths and all’s good! :)&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;go generate&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;h3 id=&quot;lets-push-it&quot;&gt;Let’s push it!&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Import paths in order? Check.&lt;/li&gt;
+  &lt;li&gt;Changes present? Check.&lt;/li&gt;
+  &lt;li&gt;My fork as a remote? Check.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Great, we have everything set up right - let’s push it now! :)&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;c&quot;&gt;# if you are not already on the branch&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;git checkout my-fix-local
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;git push&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;Simple!&lt;/p&gt;
+
+&lt;p&gt;For sending a pull request, you can use Github.&lt;/p&gt;
+
+&lt;h3 id=&quot;updating-your-repo&quot;&gt;Updating your repo&lt;/h3&gt;
+
+&lt;p&gt;While you were busy sorting out your import paths, someone else might have contributed some code. To update your repo, you can fetch and merge. I generally don’t like touching &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;rebase&lt;/code&gt; unless necessary but you could also do a &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;git rebase upstream/master&lt;/code&gt;.&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;git fetch upstream
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;git checkout master
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;git merge upstream/master&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;And…we are done! :)&lt;/p&gt;
+</description>
+        <pubDate>Sun, 23 Oct 2016 00:00:00 +0000</pubDate>
+        <link>https://risyandi.com/blogs/blogs/setting-import-path-for-go-generate</link>
+        <guid isPermaLink="true">https://risyandi.com/blogs/blogs/setting-import-path-for-go-generate</guid>
+        
+        
+      </item>
+    
+      <item>
+        <title>Selected for Grace Hopper Conference</title>
+        <description>&lt;p&gt;Grace Hopper Conference is the largest gathering of women technologists in the world! The energy there is &lt;em&gt;insane&lt;/em&gt;! It is inspiring, empowering and exciting! Being a woman myself, I can vouch that there are hardly any girls in CS. (Just a little background info, I am am Electronics Engineering undergraduate who is crazy about programming.) My CS friends, with whom I have technical discussions, are undoubtedly ALL male. Hanging out with women in CS, albiet even for four days, can be incredibly electrifying! :)&lt;/p&gt;
+
+&lt;p&gt; 
+&lt;img alt=&quot;ghc-picture&quot; src=&quot;/blogs/assets/ghc_full.jpg&quot; /&gt;
+ &lt;/p&gt;
+
+&lt;p&gt;Needless to say, I have always wanted to attend the conference. Come on, who wouldn’t? You get to see all of them in one place!&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Sheryl Sandberg (COO of Facebook)&lt;/li&gt;
+  &lt;li&gt;Ginni Rometty (President and CEO, IBM)&lt;/li&gt;
+  &lt;li&gt;Latanya Sweeney (Professor, Harvard University)&lt;/li&gt;
+  &lt;li&gt;Marc Benioff (CEO, Salesforce)&lt;/li&gt;
+  &lt;li&gt;Megan Smith (CTO, United States of America)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt; 
+&lt;img alt=&quot;Sheryl Sandberg at GHC&quot; src=&quot;/blogs/assets/sheryl_ghc.jpg&quot; /&gt;
+ &lt;/p&gt;
+
+&lt;p&gt;Isn’t it wonderful? :)&lt;/p&gt;
+
+&lt;p&gt;Given how amazing the conference is, the tickets sell out like hotcakes (yum, hotcakes!). So now you might be wondering how I got a ticket, right? Well, the wonderful ladies at Systers (super cool organisation for women in tech, by the way) give out 50 registerations every year. You have to fill out a form with your details and they’ll decide whether to give you a ticket to one of the most sought out conferences! Luckily, I got a ticket. Yay! :D&lt;/p&gt;
+
+&lt;p&gt; 
+&lt;img alt=&quot;Congratulations email&quot; src=&quot;/blogs/assets/congrats.png&quot; /&gt;
+ &lt;/p&gt;
+
+&lt;p&gt;BUT…I won’t be able to go. The registerations are not paid ones which means that I’ll have to shell out $950 + travel (I am talking overseas travel, guys) + accomodation. &lt;em&gt;That&lt;/em&gt; was simply not going to happen. If you translate it to Indian rupees, it’s almost RS. 100,000. ABSOLUTELY not gonna happen!&lt;/p&gt;
+
+&lt;p&gt;Sadly, I had to send an email to Systers explaining that I wouldn’t be able to join in.&lt;/p&gt;
+
+&lt;p&gt; 
+&lt;img alt=&quot;my email to Systers&quot; src=&quot;/blogs/assets/ghc-reply-email.png&quot; /&gt;
+ &lt;/p&gt;
+
+&lt;p&gt;But at the end of the day, I’m glad I was at least considered for the ticket. Even though I am unable to go this time, I will try again next year! There are a number of scholarships available (although many are for US citizens) and I’ll try applying through them. Crossing my fingers for the next time! :)&lt;/p&gt;
+</description>
+        <pubDate>Sat, 03 Sep 2016 00:00:00 +0000</pubDate>
+        <link>https://risyandi.com/blogs/blogs/ghc-registeration</link>
+        <guid isPermaLink="true">https://risyandi.com/blogs/blogs/ghc-registeration</guid>
+        
+        
+      </item>
+    
+  </channel>
+</rss>
