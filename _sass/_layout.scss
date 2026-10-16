@@ -450,6 +450,68 @@ pre code.hljs {
 			padding-bottom: 0.5em;
  		}
 	}
+
+	// Author profile card (About page)
+	.author-profile {
+		text-align: center;
+		padding: 1em 1em 0;
+		margin: 0 auto;
+
+		.author-photo {
+			width: 200px;
+			height: 200px;
+			border-radius: 50%;
+			object-fit: cover;
+			border: 4px solid $bc-red;
+			box-shadow: 0 2px 12px rgba(0, 0, 0, 0.12);
+			margin-bottom: 1.5em;
+			@include media($mobile) {
+				width: 250px;
+				height: 250px;
+			}
+		}
+
+		.author-heading {
+			font-size: modular-scale(1);
+			font-family: $base-font-family;
+			font-weight: 400;
+			font-style: italic;
+			color: $medium-gray;
+			margin-bottom: 0.5em;
+			line-height: 1.6;
+		}
+
+		.author-title {
+			font-size: modular-scale(0);
+			font-weight: 700;
+			color: $bc-red;
+			margin-bottom: 1.25em;
+			letter-spacing: 0.02em;
+		}
+
+		.author-bio {
+			font-size: modular-scale(0);
+			max-width: 640px;
+			margin: 0 auto 1.5em;
+			line-height: 1.8;
+			color: $dark-gray;
+		}
+
+		.author-social {
+			margin-bottom: 1em;
+			a {
+				display: inline-block;
+				font-size: 1.6em;
+				color: $bc-red;
+				padding: 0 0.5em;
+				transition: color 0.15s ease;
+				&:hover {
+					color: darken($bc-red, 10%);
+					text-decoration: none;
+				}
+			}
+		}
+	}
 }
 
 /*
