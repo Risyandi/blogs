@@ -1,0 +1,29 @@
+<!-- Author profile card for About page -->
+<div class="author-profile">
+  <img
+    src="{{ site.author_photo | prepend: site.baseurl }}"
+    alt="Risyandi"
+    class="author-photo"
+    width="250"
+    height="250"
+    loading="lazy">
+  <h2 class="author-heading">{{ site.description | truncate: 80 }}</h2>
+  <p class="author-title">Software Engineer &bull; AdTech Specialist &bull; Data Enthusiast</p>
+  <p class="author-bio">
+    I build things at the intersection of software engineering, advertising technology, and data science.
+    Based in Indonesia, I explore the digital startup ecosystem — from scalable backend systems to
+    design thinking and product strategy. This blog is where I share what I learn along the way.
+  </p>
+  <div class="author-social">
+    {% for social in site.social %}
+      {% if social.url != null and social.username != null %}
+      <a href="{{ social.url }}" title="{{ social.desc }}" target="_blank" rel="noopener noreferrer">
+        <i class="fa fa-{{ social.icon }}"></i>
+      </a>
+      {% endif %}
+    {% endfor %}
+    <a href="mailto:{{ site.email }}" title="Email me">
+      <i class="fa fa-envelope-o"></i>
+    </a>
+  </div>
+</div>
