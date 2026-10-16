@@ -1,23 +1,14 @@
 ---
 layout: page
 title: About
-description: Risyandi an minimalist personal, tech enthusiast, and a digital nomads from indonesia
+description: Risyandi — Software Engineer, AdTech Specialist, and Data Enthusiast from Indonesia. Building at the intersection of engineering, advertising technology, and data science.
 permalink: /about/
 ---
-<br>
-Hello folks. <br>
-my name is Risyandi, I'm a minimalist personal continuously learn and explorer knowledge about Software Development, Advertising Technologies, Data Scientist, Design, and Ecosystem Digital Startup in Indonesia.
-<br>
-Keep in touch with me, on social media :
-<div align="center">
-    <a href="mailto:Risyandi.94@gmail.com"><i class="fa fa-envelope-o fa-fw" aria-hidden="true" style="font-size:40px;color:#cc2a41"></i></a>
-    &nbsp; &nbsp; &nbsp;
-    <a href="https://github.com/Risyandi"><i class="fa fa-github" aria-hidden="true" style="font-size:40px;color:#cc2a41"></i></a>
-    &nbsp; &nbsp; &nbsp;
-    <a href="https://twitter.com/Risyandi94"><i class="fa fa-twitter" aria-hidden="true" style="font-size:40px;color:#cc2a41"></i></a>
-    &nbsp; &nbsp; &nbsp;
-    <a href="https://www.linkedin.com/id/risyandi/"><i class="fa fa-linkedin" aria-hidden="true" style="font-size:40px;color:#cc2a41"></i></a>
-    &nbsp; &nbsp; &nbsp;
-    <a href="https://www.quora.com/profile/Risyandi"><i class="fa fa-quora" aria-hidden="true" style="font-size:40px;color:#cc2a41"></i></a>
-    &nbsp; &nbsp; &nbsp;
-</div>
+
+{% include author-profile.html %}
+
+<br>Hello folks. My name is Risyandi, and I'm a software engineer who thrives at the crossroads of technology, data, and design. I work across the full spectrum of digital product development — from architecting scalable backend systems to diving deep into advertising technology, data science, and the Indonesian startup ecosystem.
+
+<br>I believe in **minimalism** — in code, in design, in life. Clean solutions over complex ones. Continuous learning over static expertise. This blog is my open notebook: a place where I document technical deep-dives, share hard-won lessons from the trenches, and explore ideas at the edge of what's possible.
+
+<br>If you're building something interesting, wrestling with a tough engineering problem, or just want to talk tech — reach out. I'm always happy to connect.
